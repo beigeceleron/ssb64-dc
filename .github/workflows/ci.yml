@@ -1,0 +1,26 @@
+# The checks that need no ROM (Phase 3). CI never holds the ROM:
+# putting it in a secret, cache or artifact would be distributing it. The
+# host tests, oracles and the Dreamcast build need one, so they are run
+# locally with `./run.sh test` (see CONTRIBUTING.md).
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  no-rom:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      # KallistiOS's prebuilt amd64 toolchain, so the image takes minutes
+      # rather than the hour a from-source toolchain does.
+      - name: build the image
+        run: ./run.sh image --prebuilt
+      - name: checks
+        run: ./run.sh test --ci

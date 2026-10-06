@@ -1,0 +1,31 @@
+#!/bin/bash
+# ssb64-dc: no commit over a red test.
+#
+# Why this exists: three commits once shipped over an oracle that had not
+# built, because the fast legs -- the host cross-tests, the
+# purity grep, a target build -- were all green and nobody ran the slow one.
+# The oracles are the port's only proof that its arithmetic is the N64's, so
+# they are the last leg that should be optional. `./run.sh test` is about
+# thirty-five seconds -- twenty-five of it the oracle leg, and
+# twenty-four of *that* two runaway Master Hand animations); `git commit
+# --no-verify` skips it when you mean to.
+#
+# Installed by `./run.sh hooks` (and by `./run.sh setup`), which points
+# core.hooksPath here.
+set -u
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT" || exit 1
+
+if [ -n "${SSB64_SKIP_TESTS:-}" ]; then
+    echo "pre-commit: SSB64_SKIP_TESTS set -- not running ./run.sh test" >&2
+    exit 0
+fi
+echo "pre-commit: ./run.sh test (host cross-tests, oracles, purity)" >&2
+if ! ./run.sh test; then
+    echo >&2
+    echo "pre-commit: refused -- a test is red. Fix it, or commit with" >&2
+    echo "            --no-verify if you know why it is red and are saying so" >&2
+    echo "            in the commit message." >&2
+    exit 1
+fi

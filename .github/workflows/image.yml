@@ -1,0 +1,65 @@
+# Publishes the build image for amd64 and arm64 to GHCR, so
+# `./run.sh image` pulls it instead of compiling the toolchain. The tag is
+# the pin-derived one from scripts/ctr.sh, so a bumped pin is a new image.
+# Run by hand or when the pins or the Dockerfile change.
+name: image
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [docker/**, scripts/ctr.sh]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: free disk
+        run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
+      - uses: docker/setup-buildx-action@v3
+      - name: log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      # The layer cache lives in the registry (a tag per architecture), so a
+      # retry after a late failure reuses the toolchain instead of
+      # recompiling it. mode=max keeps the intermediate stages too.
+      - name: build natively (compiles the toolchain unless cached)
+        run: |
+          . docker/pins.env
+          cache="${IMAGE_REGISTRY}:buildcache-${{ matrix.arch }}"
+          ./run.sh image --local --load \
+            --cache-from "type=registry,ref=$cache" \
+            --cache-to "type=registry,ref=$cache,mode=max"
+      - name: push
+        run: |
+          . docker/pins.env
+          tag="$(./scripts/ctr.sh name)"
+          ref="${IMAGE_REGISTRY}:${tag#*:}-${{ matrix.arch }}"
+          docker tag "$tag" "$ref"
+          docker push "$ref"
+
+  manifest:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: one tag for both architectures
+        run: |
+          . docker/pins.env
+          tag="$(./scripts/ctr.sh name)"
+          ref="${IMAGE_REGISTRY}:${tag#*:}"
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker buildx imagetools create -t "$ref" "$ref-amd64" "$ref-arm64"
