@@ -48,7 +48,7 @@ import struct
 import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-ROM_DEFAULT = os.path.join(REPO_ROOT, "base_rom", "baserom.z64")
+ROM_DEFAULT = os.path.join(REPO_ROOT, "baserom.z64")
 
 # ROM ranges, US. The source of truth is the decomp's smashbrothers.us.yaml
 # (the eighteen `particles/*_{scb,txb}` segments) and its

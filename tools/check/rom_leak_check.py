@@ -23,7 +23,7 @@ Without a ROM (--no-rom, the CI form) it can only check the raw shape's
 precondition: no tracked binary file at all outside --allow. Nothing
 derived from the ROM is shipped to make the full check possible there.
 
-  python3 tools/check/rom_leak_check.py [--rom base_rom/X.z64] [--history]
+  python3 tools/check/rom_leak_check.py [--rom baserom.z64] [--history]
   python3 tools/check/rom_leak_check.py --no-rom
 """
 import argparse
@@ -134,7 +134,7 @@ def matched_bytes(rom, data, stride):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--rom", help="default: the one .z64 in base_rom/")
+    ap.add_argument("--rom", help="default: baserom.z64")
     ap.add_argument("--history", action="store_true",
                     help="every blob ever committed, not just the tree")
     ap.add_argument("--no-rom", action="store_true",
@@ -147,7 +147,7 @@ def main():
     if not args.no_rom:
         path = args.rom
         if not path:
-            found = glob.glob("base_rom/*.z64")
+            found = glob.glob("baserom.z64")
             if len(found) != 1:
                 raise SystemExit("no ROM: pass --rom, or --no-rom")
             path = found[0]

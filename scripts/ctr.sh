@@ -18,7 +18,7 @@
 #   CTR=docker|podman     force a runtime instead of probing
 #   SSB64_IMAGE=<ref>     use an image built elsewhere
 #   SSB64_REGISTRY=<repo> where to pull from (default: IMAGE_REGISTRY in pins.env)
-#   SSB64_ROM_DIR=<dir>   mount the baserom from outside the repo
+#   SSB64_ROM=<file>      mount the baserom from outside the repo (at ./baserom.z64)
 # Passed through when set: EXTRA_CFLAGS, EXTRA_LDFLAGS, MTX_BACKEND,
 # SSB64_BUILD_JOBS, RELEASE.
 set -e
@@ -118,7 +118,7 @@ run)
     [ -t 0 ] && [ -t 1 ] && ARGS+=(-it)
     [ "${1:-}" = "--net-host" ] && { shift; ARGS+=(--network host); }
     # The baserom is copyrighted: mounted, never copied into an image.
-    [ -n "${SSB64_ROM_DIR:-}" ] && ARGS+=(-v "$SSB64_ROM_DIR:/work/base_rom:ro")
+    [ -n "${SSB64_ROM:-}" ] && ARGS+=(-v "$SSB64_ROM:/work/baserom.z64:ro")
 
     exec "$RT" run "${ARGS[@]}" "$IMAGE" "$@"
     ;;

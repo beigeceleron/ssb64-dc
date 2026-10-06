@@ -36,7 +36,7 @@ import struct
 import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-ROM_DEFAULT = os.path.join(REPO_ROOT, "base_rom", "baserom.z64")
+ROM_DEFAULT = os.path.join(REPO_ROOT, "baserom.z64")
 
 # symbols/system.txt:608 gSYSinTable = 0x8003B950; // size:0x1000, minus
 # the `main` segment's vram (0x80000460) plus its ROM start (0x1060).

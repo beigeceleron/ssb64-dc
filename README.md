@@ -136,8 +136,8 @@ have git and docker/podman installed. Tested
 on Linux (x86) and macOS (arm64); Windows is untested, but I have no reason
 to believe WSL2 wouldn't work here.
 
-1. Put the ROM at `base_rom/baserom.z64` (big-endian; the
-   folder is gitignored).
+1. Put the ROM in the project root as `baserom.z64` (big-endian; `*.z64` is
+   gitignored).
 2. Build:
 
 ```sh

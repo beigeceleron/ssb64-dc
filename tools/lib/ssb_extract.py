@@ -18,7 +18,7 @@ import os
 # Anchored to the repo root, not the caller's cwd, so a default resolves
 # the same from a Makefile's directory as from the root.
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-ROM_DEFAULT = os.path.join(REPO_ROOT, "base_rom", "baserom.z64")
+ROM_DEFAULT = os.path.join(REPO_ROOT, "baserom.z64")
 RELOC_DIR = os.path.join(REPO_ROOT, "build", "reloc")
 RELOC_SEG = 0x1AC870
 FILE_COUNT = 2132          # US

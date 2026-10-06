@@ -38,7 +38,7 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 DECOMP = os.environ.get("SSB_DECOMP_DIR", "/opt/ssb-decomp-re")
 if not os.path.isdir(DECOMP):
     DECOMP = os.path.join(ROOT, "ssb-decomp-re")
-ROM_DEFAULT = os.path.join(ROOT, "base_rom", "baserom.z64")
+ROM_DEFAULT = os.path.join(ROOT, "baserom.z64")
 OBJDUMP = os.environ.get("SH_OBJDUMP", "sh-elf-objdump")
 
 # ---- the N64 leg -----------------------------------------------------

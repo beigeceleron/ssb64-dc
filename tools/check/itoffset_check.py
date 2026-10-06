@@ -96,8 +96,7 @@ def check_model_relocs():
         site, target = struct.unpack_from("<2I", blob, off_ifix + i * 8)
         have[site - off_models] = target - off_models
 
-    rom = open(os.path.join(REPO_ROOT, "base_rom",
-                            "baserom.z64"), "rb").read()
+    rom = open(os.path.join(REPO_ROOT, "baserom.z64"), "rb").read()
     _fobj, _e, intern, _os, _oi = L.file_info(rom, I.ITCOMMONOBJECT)
 
     missing = sorted(s for s in intern if s not in have)

@@ -8,5 +8,5 @@
 # Use an image built somewhere else instead of the tag from docker/pins.env.
 #export SSB64_IMAGE=ghcr.io/<you>/ssb64-dc-dev:latest
 
-# Keep the baserom outside the repo; it gets mounted read-only at base_rom/.
-#export SSB64_ROM_DIR="$HOME/roms/ssb64"
+# Keep the baserom outside the repo; it gets mounted read-only at ./baserom.z64.
+#export SSB64_ROM="$HOME/roms/ssb64.z64"

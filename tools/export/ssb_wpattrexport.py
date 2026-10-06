@@ -61,7 +61,7 @@ from ssb_itemexport import (            # noqa: E402
 from ssb_paths import DECOMP_DIR        # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-ROM_DEFAULT = os.path.join(ROOT, "base_rom", "baserom.z64")
+ROM_DEFAULT = os.path.join(ROOT, "baserom.z64")
 RELOC_HEADER = os.path.join(ROOT, "src", "dc", "decomp", "reloc_data.us.h")
 RELOC_DESC = os.path.join(DECOMP_DIR, "tools", "relocFileDescriptions.us.txt")
 RELOC_SRC = os.path.join(DECOMP_DIR, "src", "relocData")

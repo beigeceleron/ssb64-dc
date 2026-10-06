@@ -211,8 +211,8 @@ BANKS = {
 
 
 def default_rom():
-    for p in ("base_rom/baserom.z64",
-              "../../../base_rom/baserom.z64"):
+    for p in ("baserom.z64",
+              "../../../baserom.z64"):
         if os.path.exists(p):
             return p
     sys.exit("no base ROM found; pass --rom")

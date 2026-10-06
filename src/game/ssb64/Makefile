@@ -404,7 +404,7 @@ TRANSITIONS = romdisk/aeroplane.tra romdisk/check.tra romdisk/gakubuthi.tra \
 define transition-rule
 romdisk/$(1).tra: $$(TRANSTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_transexport.py \
-	    --rom base_rom/baserom.z64 --name $(2) \
+	    --rom baserom.z64 --name $(2) \
 	    --out $(SELF)/romdisk/$(1).tra
 endef
 $(eval $(call transition-rule,aeroplane,Aeroplane))
@@ -433,7 +433,7 @@ EMBLEMS = romdisk/mario.mdl romdisk/fox.mdl romdisk/donkey.mdl \
 define emblem-rule
 romdisk/$(1).mdl: $$(EMBLEMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_emblemexport.py \
-	    --rom base_rom/baserom.z64 --name $(2) \
+	    --rom baserom.z64 --name $(2) \
 	    --out $(SELF)/romdisk/$(1).mdl
 endef
 
@@ -455,7 +455,7 @@ SPOTTOOL_DEPS = ../../../tools/export/ssb_spotexport.py $(PACKTOOL_DEPS)
 
 romdisk/spotlite.mdl: $(SPOTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spotexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/spotlite.mdl
 
 # The save file's pictures: the icon's three frames, the
@@ -469,7 +469,7 @@ VMUARTTOOL_DEPS = ../../../tools/export/ssb_vmuart.py \
 
 romdisk/vmuart.bin: $(VMUARTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_vmuart.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/vmuart.bin \
 	    --preview $(SELF)/vmuart-preview.png
 
@@ -482,7 +482,7 @@ romdisk/vmuart.bin: $(VMUARTTOOL_DEPS)
 DCFONT_ONLY = TextBoxAUpper,TextBoxALower,TextBoxBUpper,TextBoxBLower,TextBoxCUpper,TextBoxCLower,TextBoxDUpper,TextBoxDLower,TextBoxEUpper,TextBoxELower,TextBoxFUpper,TextBoxFLower,TextBoxGUpper,TextBoxGLower,TextBoxHUpper,TextBoxHLower,TextBoxIUpper,TextBoxILower,TextBoxJUpper,TextBoxJLower,TextBoxKUpper,TextBoxKLower,TextBoxLUpper,TextBoxLLower,TextBoxMUpper,TextBoxMLower,TextBoxNUpper,TextBoxNLower,TextBoxOUpper,TextBoxOLower,TextBoxPUpper,TextBoxPLower,TextBoxQUpper,TextBoxQLower,TextBoxRUpper,TextBoxRLower,TextBoxSUpper,TextBoxSLower,TextBoxTUpper,TextBoxTLower,TextBoxUUpper,TextBoxULower,TextBoxVUpper,TextBoxVLower,TextBoxWUpper,TextBoxWLower,TextBoxXUpper,TextBoxXLower,TextBoxYUpper,TextBoxYLower,TextBoxZUpper,TextBoxZLower,TextBoxColon,TextBoxComma,TextBoxPeriod,TextBoxDash,TextBox1,TextBox2,TextBox3,TextBox4,TextBox5,TextBox6,TextBox7,TextBox8,TextBox9,TextBox0,TextBoxQuote,TextBoxAmpers,TextBoxSlash,TextBoxApostrophe,TextBoxQuestion,TextBoxBracketOpen,TextBoxBracketClose,TextBoxEAccent
 romdisk/dcfont.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 195 \
+	    --rom baserom.z64 --file 195 \
 	    --only $(DCFONT_ONLY) \
 	    --out $(SELF)/$@
 
@@ -494,7 +494,7 @@ ARROWTOOL_DEPS = ../../../tools/export/ssb_arrowexport.py $(PACKTOOL_DEPS)
 
 romdisk/ifarrows.mdl: $(ARROWTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_arrowexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/ifarrows.mdl
 
 # The magnifying glass: relocData file 166's one-triangle handle and
@@ -504,7 +504,7 @@ MAGNIFYTOOL_DEPS = ../../../tools/export/ssb_magnifyexport.py $(PACKTOOL_DEPS)
 
 romdisk/ifmagnify.mdl: $(MAGNIFYTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_magnifyexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/ifmagnify.mdl
 
 # How to Play's control-stick diagram: relocData file
@@ -519,7 +519,7 @@ EXPLAINTOOL_DEPS = ../../../tools/export/ssb_explainexport.py \
 define explain-rule
 romdisk/$(1).mdl: $$(EXPLAINTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_explainexport.py \
-	    --rom base_rom/baserom.z64 --what $(2) \
+	    --rom baserom.z64 --what $(2) \
 	    --out $(SELF)/romdisk/$(1).mdl
 endef
 
@@ -547,7 +547,7 @@ STAFFROLLTOOL_DEPS = ../../../tools/export/ssb_staffrollexport.py \
 define staffroll-rule
 romdisk/$(1).mdl: $$(STAFFROLLTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_staffrollexport.py \
-	    --rom base_rom/baserom.z64 --what $(2) \
+	    --rom baserom.z64 --what $(2) \
 	    --out $(SELF)/romdisk/$(1).mdl
 endef
 
@@ -566,7 +566,7 @@ SHADOWTOOL_DEPS = ../../../tools/export/ssb_shadowexport.py $(PACKTOOL_DEPS)
 
 romdisk/ftshadow.mdl: $(SHADOWTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_shadowexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/ftshadow.mdl
 
 # The rebirth halo: relocData file 85's three-node DObjDesc tree, the
@@ -578,7 +578,7 @@ EFFECTTOOL_DEPS = ../../../tools/export/ssb_effectexport.py $(PACKTOOL_DEPS) \
 
 romdisk/efhalo.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efhalo.mdl
 
 # The Poke Ball's opening rays: relocData file 85's four-joint
@@ -588,7 +588,7 @@ romdisk/efhalo.mdl: $(EFFECTTOOL_DEPS)
 # slash's and the entry vehicles' do.
 romdisk/efmballrays.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --what mballrays \
 	    --out $(SELF)/romdisk/efmballrays.mdl
 
@@ -597,7 +597,7 @@ romdisk/efmballrays.mdl: $(EFFECTTOOL_DEPS)
 # by efManagerItemGetSwirlProcUpdate when an item lands in a hand.
 romdisk/efswirl.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --what itemgetswirl \
 	    --out $(SELF)/romdisk/efswirl.mdl
 
@@ -607,7 +607,7 @@ romdisk/efswirl.mdl: $(EFFECTTOOL_DEPS)
 # velocity (tools/export/ssb_effectexport.py --what quake).
 romdisk/efquake.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what quake \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efquake.mdl
 
 # The damage orbs: one quad off relocData file 83's display list, with
@@ -616,7 +616,7 @@ romdisk/efquake.mdl: $(EFFECTTOOL_DEPS)
 # --what orbs).
 romdisk/eforbs.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what orbs \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/eforbs.mdl
 
 # The impact wave: relocData file 83's green shockwave, the wave a fighter
@@ -629,7 +629,7 @@ romdisk/eforbs.mdl: $(EFFECTTOOL_DEPS)
 # scrolls its UV (tools/export/ssb_effectexport.py --what impactwave).
 romdisk/efimpactwave.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what impactwave \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efimpactwave.mdl
 
 # Mario's fireball model: relocData file 297's 300x300 quad
@@ -640,7 +640,7 @@ romdisk/efimpactwave.mdl: $(EFFECTTOOL_DEPS)
 # two frames (tools/export/ssb_effectexport.py --what fireball).
 romdisk/wpmariofireball.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what fireball \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpmariofireball.mdl
 
 # Fox's Blaster model: relocData file 316's one flat SHADE-
@@ -650,7 +650,7 @@ romdisk/wpmariofireball.mdl: $(EFFECTTOOL_DEPS)
 # than a baked picture (tools/export/ssb_effectexport.py --what blaster).
 romdisk/wpfoxblaster.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what blaster \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpfoxblaster.mdl
 
 # Sector Z's Arwing laser bolt: relocData file 153's one
@@ -662,7 +662,7 @@ romdisk/wpfoxblaster.mdl: $(EFFECTTOOL_DEPS)
 # asserts both land on the same bytes).
 romdisk/wparwinglaser.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what arwinglaser \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wparwinglaser.mdl
 
 # Samus's Charge Shot and Pikachu's airborne Thunder Jolt:
@@ -677,11 +677,11 @@ romdisk/wparwinglaser.mdl: $(EFFECTTOOL_DEPS)
 # (tools/export/ssb_effectexport.py --what chargeshot|thunderjolt).
 romdisk/wpsamuschargeshot.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what chargeshot \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpsamuschargeshot.mdl
 romdisk/wppikachujolt.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what thunderjolt \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wppikachujolt.mdl
 
 # Yoshi's stars and his thrown egg. The same one-quad shape
@@ -695,11 +695,11 @@ romdisk/wppikachujolt.mdl: $(EFFECTTOOL_DEPS)
 # bubble's material stage.
 romdisk/wpyoshistar.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what yoshistar \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpyoshistar.mdl
 romdisk/wpyoshieggthrow.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what yoshieggthrow \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpyoshieggthrow.mdl
 
 # The Ray Gun's shot: one quad whose WPAttributes are in
@@ -707,7 +707,7 @@ romdisk/wpyoshieggthrow.mdl: $(EFFECTTOOL_DEPS)
 # ITCommonObject.
 romdisk/wplgunammo.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what lgunammo \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wplgunammo.mdl
 
 # Samus's Bomb, the last of the five weapons whose WPDesc
@@ -722,7 +722,7 @@ romdisk/wplgunammo.mdl: $(EFFECTTOOL_DEPS)
 # as the fuse burns down, faster the closer it gets.
 romdisk/wpsamusbomb.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what samusbomb \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpsamusbomb.mdl
 
 # Link's boomerang, the first weapon whose model is a
@@ -734,7 +734,7 @@ romdisk/wpsamusbomb.mdl: $(EFFECTTOOL_DEPS)
 # both extern links into relocData 325.
 romdisk/wplinkboomerang.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what boomerang \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wplinkboomerang.mdl
 
 # Kirby's Final Cutter blade. Flags 0x03 rather than the
@@ -745,7 +745,7 @@ romdisk/wplinkboomerang.mdl: $(EFFECTTOOL_DEPS)
 # batch belongs to -- the packer checks that rather than assuming it.
 romdisk/wpkirbycutter.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what cutter \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpkirbycutter.mdl
 
 # Master Hand's finger rocket. Flags 0x01 -- the
@@ -759,7 +759,7 @@ romdisk/wpkirbycutter.mdl: $(EFFECTTOOL_DEPS)
 # bullet name the same DObjDesc array, so one pack serves both rows.
 romdisk/wpbossbullet.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what bossbullet \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpbossbullet.mdl
 
 # Pikachu's ground Thunder Jolt, the crawler his airborne
@@ -777,7 +777,7 @@ romdisk/wpbossbullet.mdl: $(EFFECTTOOL_DEPS)
 # NULL the script really does select.
 romdisk/wppikachugjolt.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what groundjolt \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wppikachugjolt.mdl
 
 # Pikachu's Thunder: the bolt's head and the trail segments
@@ -799,7 +799,7 @@ romdisk/wppikachugjolt.mdl: $(EFFECTTOOL_DEPS)
 # bounds it.
 romdisk/wppikachuthunder.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what thunder \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wppikachuthunder.mdl
 
 # G04: Ness's two specials that throw something. PK Fire is the one
@@ -813,15 +813,15 @@ romdisk/wppikachuthunder.mdl: $(EFFECTTOOL_DEPS)
 # trail are the same two models, so four WPDescs share these two packs.
 romdisk/wpnesspkfire.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what pkfire \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpnesspkfire.mdl
 romdisk/wpnesspkthunder.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what pkthunder \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpnesspkthunder.mdl
 romdisk/wpnesspktrail.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what pkthundertrail \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wpnesspktrail.mdl
 
 # Link's Spin Attack -- his Up-B's spinning hitbox (a
@@ -829,18 +829,18 @@ romdisk/wpnesspktrail.mdl: $(EFFECTTOOL_DEPS)
 # around him while it runs (relocData 353, his Special2).
 romdisk/wplinkspin.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what spinattack \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/wplinkspin.mdl
 romdisk/efspin.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what spin \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efspin.mdl
 
 # the spark Kirby's rapid jab throws -- relocData 348 again,
 # a tree with DL links and no animation at all.
 romdisk/efvulcan.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what vulcanjab \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efvulcan.mdl
 
 # Ness's four effects, in three packs. PSI Magnet's bubble
@@ -851,15 +851,15 @@ romdisk/efvulcan.mdl: $(EFFECTTOOL_DEPS)
 # one quad with its own texture and no animation (EFENTRY_LINKDL).
 romdisk/efpsimagnet.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what psimagnet \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efpsimagnet.mdl
 romdisk/efpkwave.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what pkwave \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efpkwave.mdl
 romdisk/efpktrail.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what pktrail \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efpktrail.mdl
 
 # A reflector shattering: relocData 84's five-joint tree,
@@ -867,7 +867,7 @@ romdisk/efpktrail.mdl: $(EFFECTTOOL_DEPS)
 # swirl's shape. EFENTRY_MOBJ's row says why its two symbols read crossed.
 romdisk/efreflectbreak.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what reflectbreak \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efreflectbreak.mdl
 
 # The grab swirl: relocData 84's six-joint tree, four MObjs
@@ -875,7 +875,7 @@ romdisk/efreflectbreak.mdl: $(EFFECTTOOL_DEPS)
 # shards' shape, with the same two symbols crossed.
 romdisk/efcatchswirl.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what catchswirl \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efcatchswirl.mdl
 
 # Samus's grapple beam glow: SamusSpecial2's two-joint
@@ -883,35 +883,35 @@ romdisk/efcatchswirl.mdl: $(EFFECTTOOL_DEPS)
 # AnimJoint.
 romdisk/efgrapplebeam.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what grapplebeam \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efgrapplebeam.mdl
 
 # Fox's Reflector: FoxSpecial2's two-joint hexagon and
 # its four AnimJoints, Start, Loop, Hit and End.
 romdisk/efreflector.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what reflector \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efreflector.mdl
 
 # Falcon Kick's trail: CaptainSpecial2's two-joint tree,
 # one MObj and its MatAnimJoint, and an AnimJoint.
 romdisk/effalconkick.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what falconkick \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/effalconkick.mdl
 
 # Falcon Punch's flame: CaptainSpecial3's display list
 # bound to one DObj, one MObj stepping three sprites.
 romdisk/effalconpunch.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what falconpunch \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/effalconpunch.mdl
 
 # Sing's notes: PurinSpecial2's six-joint tree over four
 # DL links, four MObjs, an AnimJoint and a MatAnimJoint.
 romdisk/efsing.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what sing \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efsing.mdl
 
 # The Poke Ball Pikachu and Jigglypuff are thrown in from:
@@ -919,7 +919,7 @@ romdisk/efsing.mdl: $(EFFECTTOOL_DEPS)
 # MatAnimJoint per facing, R first.
 romdisk/efmballthrown.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what mballthrown \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efmballthrown.mdl
 
 # The ground Thunder Jolt's spark: PikachuSpecial3's
@@ -927,14 +927,14 @@ romdisk/efmballthrown.mdl: $(EFFECTTOOL_DEPS)
 # MatAnimJoint.
 romdisk/efjoltspark.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what joltspark \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efjoltspark.mdl
 
 # The Thunder's trail spark: PikachuModel's DObjDLLink array
 # on one DObj and one MObj over four sprites, which the code picks.
 romdisk/efthundertrail.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what thundertrail \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efthundertrail.mdl
 
 # Kirby's star: ITCommonObject's display list at 0x5458,
@@ -942,7 +942,7 @@ romdisk/efthundertrail.mdl: $(EFFECTTOOL_DEPS)
 # arm builds it.
 romdisk/efkirbystar.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what kirbystar \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efkirbystar.mdl
 
 # Pikachu's forward-smash sparks: relocData 347's four-joint
@@ -950,7 +950,7 @@ romdisk/efkirbystar.mdl: $(EFFECTTOOL_DEPS)
 # AnimJoint/MatAnimJoint pairs baked side by side for the maker to pick.
 romdisk/efthundershock.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what thundershock \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efthundershock.mdl
 
 # Mario's (and Luigi's) warp pipe, the first of the ten
@@ -967,7 +967,7 @@ romdisk/efthundershock.mdl: $(EFFECTTOOL_DEPS)
 # shaded 1 and want the scene's lights the way a fighter's model does.
 romdisk/efdokan.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what dokan \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efdokan.mdl
 
 # Donkey Kong's barrel and Samus's arrival point, the
@@ -986,11 +986,11 @@ romdisk/efdokan.mdl: $(EFFECTTOOL_DEPS)
 # where the pipe and the barrel are lit throughout.
 romdisk/eftaru.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what taru \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/eftaru.mdl
 romdisk/efpoint.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what point \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efpoint.mdl
 
 # Kirby's entry star, the fourth vehicle and the first
@@ -1005,7 +1005,7 @@ romdisk/efpoint.mdl: $(EFFECTTOOL_DEPS)
 # rule about a vehicle's lighting, only a number the packer prints.
 romdisk/efstar.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what star \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efstar.mdl
 
 # Link's entry wave and the beam that comes down with it,
@@ -1017,11 +1017,11 @@ romdisk/efstar.mdl: $(EFFECTTOOL_DEPS)
 # than the ground Thunder Jolt's six.
 romdisk/efwave.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what wave \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efwave.mdl
 romdisk/efbeam.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what beam \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efbeam.mdl
 
 # Yoshi's entry egg: relocData file 354's one display list -- its EFDesc
@@ -1030,7 +1030,7 @@ romdisk/efbeam.mdl: $(EFFECTTOOL_DEPS)
 # run of two textures the FPackMObjs indexes.
 romdisk/efentryegg.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what egg \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efentryegg.mdl
 
 # Fox's Arwing: relocData 161's twelve-joint DObjDesc tree and its DL
@@ -1040,7 +1040,7 @@ romdisk/efentryegg.mdl: $(EFFECTTOOL_DEPS)
 # one pack and src/dc/efmanager.c picks by index, R first.
 romdisk/efarwing.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what arwing \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efarwing.mdl
 
 # Captain Falcon's Blue Falcon: relocData 350's twelve-joint tree and its
@@ -1050,7 +1050,7 @@ romdisk/efarwing.mdl: $(EFFECTTOOL_DEPS)
 # the maker's loop is the matrix kind, which no pack can carry.
 romdisk/efcar.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what car \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efcar.mdl
 
 # The egg a fighter caught by Yoshi's Egg Lay sits inside: relocData
@@ -1060,7 +1060,7 @@ romdisk/efcar.mdl: $(EFFECTTOOL_DEPS)
 # what efManagerYoshiEggLaySetAnim picks between.
 romdisk/efegglay.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what egglay \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efegglay.mdl
 
 # Kirby's Final Cutter: four trees out of relocData 348, his Special2 --
@@ -1069,19 +1069,19 @@ romdisk/efegglay.mdl: $(EFFECTTOOL_DEPS)
 # behind it (the only one with DL links).
 romdisk/efcutup.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what cutterup \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efcutup.mdl
 romdisk/efcutdown.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what cutterdown \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efcutdown.mdl
 romdisk/efcutdraw.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what cutterdraw \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efcutdraw.mdl
 romdisk/efcuttrail.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what cuttertrail \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efcuttrail.mdl
 
 # The damage slash: relocData file 83's three-joint DObjDesc tree, its two
@@ -1109,7 +1109,7 @@ romdisk/efcuttrail.mdl: $(EFFECTTOOL_DEPS)
 disc/efslash.mdl: $(EFFECTTOOL_DEPS)
 	@mkdir -p $(SELF)/disc
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what slash \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/disc/efslash.mdl
 
 # The damage sparks' pack: the two DObjs the flyer's EFDesc
@@ -1127,7 +1127,7 @@ disc/efslash.mdl: $(EFFECTTOOL_DEPS)
 # See the note on sEFManagerModels there for the two measurements.
 romdisk/efspark.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what spark \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efspark.mdl
 
 # The metal dust's pack: the sparks' pack again out of four
@@ -1150,7 +1150,7 @@ romdisk/efspark.mdl: $(EFFECTTOOL_DEPS)
 # sEFManagerModels in src/dc/efmanager.c.
 romdisk/efmdust.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what mdust \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efmdust.mdl
 
 # The dead explosion's pack: the burst a fighter leaves
@@ -1166,7 +1166,7 @@ romdisk/efmdust.mdl: $(EFFECTTOOL_DEPS)
 # into a shared model: see fighter.h's FPACK_ENVLERP.
 romdisk/efdexp.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what deadexplode \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efdexp.mdl
 
 # The shield bubble and Yoshi's egg: one quad each, out of
@@ -1175,12 +1175,12 @@ romdisk/efdexp.mdl: $(EFFECTTOOL_DEPS)
 # (tools/export/ssb_effectexport.py --what shield, --what yoshiegg).
 romdisk/efshield.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what shield \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efshield.mdl
 
 romdisk/efyegg.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what yoshiegg \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efyegg.mdl
 
 # The small shock burst: efManagerShockSmallMakeEffect's
@@ -1191,7 +1191,7 @@ romdisk/efyegg.mdl: $(EFFECTTOOL_DEPS)
 # (tools/export/ssb_effectexport.py --what shock).
 romdisk/efshock.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what shock \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/efshock.mdl
 
 # The fire spark: EFCommonEffects2's own DObjDesc tree --
@@ -1202,7 +1202,7 @@ romdisk/efshock.mdl: $(EFFECTTOOL_DEPS)
 # MatAnimJoint steps its four-frame sprite array.
 romdisk/effirespark.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py --what firespark \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/romdisk/effirespark.mdl
 
 # The nine particle banks: eighteen ROM byte ranges, each cut out whole
@@ -1220,7 +1220,7 @@ PARTICLE_BANKS = $(foreach b,$(PARTICLE_NAMES),\
 define particle-bank-rule
 romdisk/$(1).$(2): $$(PARTICLETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_particleexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --bank $(1) --kind $(2) --out $(SELF)/romdisk/$(1).$(2)
 endef
 $(foreach b,$(PARTICLE_NAMES),\
@@ -1239,7 +1239,7 @@ PARTICLETEXTOOL_DEPS = ../../../tools/export/ssb_particletexexport.py \
 define particle-tex-rule
 romdisk/$(1).txp: $$(PARTICLETEXTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_particletexexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --bank $(1) --out $(SELF)/romdisk/$(1).txp
 endef
 $(foreach b,$(PARTICLE_NAMES),$(eval $(call particle-tex-rule,$(b))))
@@ -1290,7 +1290,7 @@ endif
 
 romdisk/bgm.pak: $(BGMPACK_DEPS)
 	cd ../../.. && python3 tools/export/ssb_bgmpack.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/$@
 
 # Every playable fighter, one pack each, loaded per scene by
@@ -1349,7 +1349,7 @@ fighter-name = $(shell echo $(1) | sed 's/./\U&/')
 define FIGHTER_PACK_RULE
 romdisk/$(1).pack: $$(FIGHTERTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_packexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --fighter $(call fighter-name,$(1)) \
 	    --out $(SELF)/romdisk/$(1).pack
 endef
@@ -1388,13 +1388,13 @@ ladder-name-nness = NNess
 define LADDER_FIGHTER_RULES
 romdisk/$(1).pack: $$(FIGHTERTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_packexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --fighter $$(ladder-name-$(1)) \
 	    --out $(SELF)/romdisk/$(1).pack
 
 romdisk/ft$(1).spr: $$(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --fighter $$(ladder-name-$(1)) \
 	    --out $(SELF)/romdisk/ft$(1).spr
 endef
@@ -1406,13 +1406,13 @@ $(foreach f,$(LADDER_FIGHTERS),$(eval $(call LADDER_FIGHTER_RULES,$(f))))
 define POLY_FIGHTER_RULES
 romdisk/$(1).pack: $$(PACKTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_packexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --fighter $$(ladder-name-$(1)) \
 	    --out $(SELF)/romdisk/$(1).pack
 
 romdisk/ft$(1).spr: $$(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --fighter $$(ladder-name-$(1)) \
 	    --out $(SELF)/romdisk/ft$(1).spr
 endef
@@ -1448,32 +1448,32 @@ STAGES = romdisk/castle.stg romdisk/jungle.stg romdisk/zebes.stg \
 
 romdisk/castle.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Castle \
+	    --rom baserom.z64 --stage Castle \
 	    --out $(SELF)/$@
 
 romdisk/jungle.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Jungle \
+	    --rom baserom.z64 --stage Jungle \
 	    --out $(SELF)/$@
 
 romdisk/zebes.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Zebes \
+	    --rom baserom.z64 --stage Zebes \
 	    --out $(SELF)/$@
 
 romdisk/hyrule.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Hyrule \
+	    --rom baserom.z64 --stage Hyrule \
 	    --out $(SELF)/romdisk/hyrule.stg
 
 romdisk/sector.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Sector \
+	    --rom baserom.z64 --stage Sector \
 	    --out $(SELF)/$@
 
 romdisk/yoster.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Yoster \
+	    --rom baserom.z64 --stage Yoster \
 	    --out $(SELF)/$@
 
 # The item pack: ITCommonData + ITCommonObject in one blob, see
@@ -1482,7 +1482,7 @@ romdisk/yoster.stg: $(STAGETOOL_DEPS)
 # nothing downstream of it can be trusted to agree.
 romdisk/itcommon.itp: $(ITEMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_itemexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/$@
 
 # The fighters' weapon hitbox tables, one blob per relocData file with each
@@ -1491,7 +1491,7 @@ romdisk/itcommon.itp: $(ITEMTOOL_DEPS)
 # those offsets.
 romdisk/wpattrs.bin: $(WPATTRTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_wpattrexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/$@
 
 # The item models (src/dc/itemmodel.c's own table names them; the
@@ -1545,40 +1545,40 @@ ITEM_MODELS = $(addprefix romdisk/it,$(addsuffix .mdl,$(ITEM_MODEL_NAMES))) \
 
 $(SELF)/.itmodels.stamp: $(ITEMBAKE_DEPS)
 	cd ../../.. && python3 tools/export/ssb_itemmodelexport.py \
-	    --rom base_rom/baserom.z64 --all \
+	    --rom baserom.z64 --all \
 	    --outdir $(SELF)/romdisk && \
 	    python3 tools/export/ssb_itemmodelexport.py \
-	        --rom base_rom/baserom.z64 --effect boxsmash \
+	        --rom baserom.z64 --effect boxsmash \
 	        --out $(SELF)/romdisk/itboxsmash.mdl && \
 	    python3 tools/export/ssb_itemmodelexport.py \
-	        --rom base_rom/baserom.z64 \
+	        --rom baserom.z64 \
 	        --effect tarubombsmash \
 	        --out $(SELF)/romdisk/ittarubombsmash.mdl && \
 	    python3 tools/export/ssb_itemmodelexport.py \
-	        --rom base_rom/baserom.z64 --weapons \
+	        --rom baserom.z64 --weapons \
 	        --outdir $(SELF)/romdisk && \
 	    python3 tools/export/ssb_itemmodelexport.py \
-	        --rom base_rom/baserom.z64 --stage-items \
+	        --rom baserom.z64 --stage-items \
 	        --outdir $(SELF)/romdisk && \
 	    python3 tools/export/ssb_itemmodelexport.py \
-	        --rom base_rom/baserom.z64 --alts \
+	        --rom baserom.z64 --alts \
 	        --outdir $(SELF)/romdisk && touch $(SELF)/.itmodels.stamp
 
 $(ITEM_MODELS): $(SELF)/.itmodels.stamp
 
 romdisk/pupupu.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Pupupu \
+	    --rom baserom.z64 --stage Pupupu \
 	    --out $(SELF)/$@
 
 romdisk/yamabuki.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Yamabuki \
+	    --rom baserom.z64 --stage Yamabuki \
 	    --out $(SELF)/$@
 
 romdisk/inishie.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Inishie \
+	    --rom baserom.z64 --stage Inishie \
 	    --out $(SELF)/$@
 
 # Final Destination, the Master Hand rung's stage. Not a VS
@@ -1587,7 +1587,7 @@ romdisk/inishie.stg: $(STAGETOOL_DEPS)
 # wallpaper, one animated layer.
 romdisk/last.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Last \
+	    --rom baserom.z64 --stage Last \
 	    --out $(SELF)/$@
 
 # The other three stages only the 1P ladder plays: the
@@ -1598,17 +1598,17 @@ romdisk/last.stg: $(STAGETOOL_DEPS)
 # name lowercased, as everywhere else here.
 romdisk/zako.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Zako \
+	    --rom baserom.z64 --stage Zako \
 	    --out $(SELF)/$@
 
 romdisk/metal.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Metal \
+	    --rom baserom.z64 --stage Metal \
 	    --out $(SELF)/$@
 
 romdisk/yostersmall.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage YosterSmall \
+	    --rom baserom.z64 --stage YosterSmall \
 	    --out $(SELF)/$@
 
 # Break the Targets, one course per fighter. Twelve
@@ -1625,7 +1625,7 @@ BONUS1_STAGES = $(foreach c,$(BONUS1_COURSES),romdisk/bonus1$(firstword $(subst 
 define BONUS1_STAGE_RULE
 romdisk/bonus1$(firstword $(subst :, ,$(1))).stg: $$(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --stage Bonus1$(lastword $(subst :, ,$(1))) --out $$(SELF)/$$@
 endef
 $(foreach c,$(BONUS1_COURSES),$(eval $(call BONUS1_STAGE_RULE,$(c))))
@@ -1639,7 +1639,7 @@ BONUS2_STAGES = $(foreach c,$(BONUS2_COURSES),romdisk/bonus2$(firstword $(subst 
 define BONUS2_STAGE_RULE
 romdisk/bonus2$(firstword $(subst :, ,$(1))).stg: $$(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --stage Bonus2$(lastword $(subst :, ,$(1))) --out $$(SELF)/$$@
 endef
 $(foreach c,$(BONUS2_COURSES),$(eval $(call BONUS2_STAGE_RULE,$(c))))
@@ -1650,7 +1650,7 @@ $(foreach c,$(BONUS2_COURSES),$(eval $(call BONUS2_STAGE_RULE,$(c))))
 # own rather than a block in each of the twelve packs.
 romdisk/bonus2plat.pak: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --platforms \
+	    --rom baserom.z64 --platforms \
 	    --out $(SELF)/$@
 
 # Race to the Finish, the third bonus stage and the only
@@ -1658,14 +1658,14 @@ romdisk/bonus2plat.pak: $(STAGETOOL_DEPS)
 # own the way last.stg does.
 romdisk/bonus3.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
-	    --rom base_rom/baserom.z64 --stage Bonus3 \
+	    --rom baserom.z64 --stage Bonus3 \
 	    --out $(SELF)/$@
 
 # The title screen's sprites: relocData file 167 (MNTitle), all fourteen,
 # as one bank the scene loads on its way in (src/dc/mntitle.c).
 romdisk/mntitle.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 167 \
+	    --rom baserom.z64 --file 167 \
 	    --out $(SELF)/romdisk/mntitle.spr
 
 # The rest of the title (src/dc/mntitle.c): the flames' thirty frames,
@@ -1679,17 +1679,17 @@ TITLE_ASSETS = romdisk/mntitlefire.spr romdisk/mntitlelabels.tra \
 
 romdisk/mntitlefire.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 168 \
+	    --rom baserom.z64 --file 168 \
 	    --out $(SELF)/romdisk/mntitlefire.spr
 
 romdisk/mntitlelabels.tra: $(TRANSTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_transexport.py \
-	    --rom base_rom/baserom.z64 --name TitleLabels \
+	    --rom baserom.z64 --name TitleLabels \
 	    --out $(SELF)/romdisk/mntitlelabels.tra
 
 romdisk/mntitlepress.tra: $(TRANSTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_transexport.py \
-	    --rom base_rom/baserom.z64 --name TitlePressStart \
+	    --rom baserom.z64 --name TitlePressStart \
 	    --out $(SELF)/romdisk/mntitlepress.tra
 
 # The title after the opening movie: the animated logo's
@@ -1698,17 +1698,17 @@ romdisk/mntitlepress.tra: $(TRANSTOOL_DEPS)
 # (tools/export/ssb_effectexport.py's titleslash row).
 romdisk/mntitlelogo.tra: $(TRANSTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_transexport.py \
-	    --rom base_rom/baserom.z64 --name TitleLogo \
+	    --rom baserom.z64 --name TitleLogo \
 	    --out $(SELF)/romdisk/mntitlelogo.tra
 
 romdisk/mntitlefiretree.tra: $(TRANSTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_transexport.py \
-	    --rom base_rom/baserom.z64 --name TitleFire \
+	    --rom baserom.z64 --name TitleFire \
 	    --out $(SELF)/romdisk/mntitlefiretree.tra
 
 romdisk/mntitleslash.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --what titleslash --out $(SELF)/$@
 
 # The HUD's sprites, one bank per relocData file the battle scene loads
@@ -1737,17 +1737,17 @@ TRAINING_WALLPAPER_BANKS = romdisk/grwptrainingblack.spr \
 
 romdisk/grwptrainingblack.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 26 \
+	    --rom baserom.z64 --file 26 \
 	    --out $(SELF)/$@
 
 romdisk/grwptrainingyellow.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 27 \
+	    --rom baserom.z64 --file 27 \
 	    --out $(SELF)/$@
 
 romdisk/grwptrainingblue.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 28 \
+	    --rom baserom.z64 --file 28 \
 	    --out $(SELF)/$@
 
 # Training mode's HUD and pause menu (src/dc/sc1ptrainingmode.c). The game
@@ -1763,7 +1763,7 @@ SC1PTRAIN_ONLY = ArrowL,ArrowR,AttackText,AttackText2,BeamSwordText,BeamSwordTex
 
 romdisk/sc1ptrain.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 29 \
+	    --rom baserom.z64 --file 29 \
 	    --only $(SC1PTRAIN_ONLY) \
 	    --out $(SELF)/$@
 
@@ -1774,34 +1774,34 @@ romdisk/sc1ptrain.spr: $(SPRITETOOL_DEPS) Makefile
 # loads it as a bank, the same shape as every other .spr here.
 romdisk/ifcommonitem.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 87 \
+	    --rom baserom.z64 --file 87 \
 	    --out $(SELF)/$@
 
 romdisk/ifdamage.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 164 \
+	    --rom baserom.z64 --file 164 \
 	    --out $(SELF)/$@
 
 romdisk/ifdigits.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 36 \
+	    --rom baserom.z64 --file 36 \
 	    --out $(SELF)/$@
 
 romdisk/iftags.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 38 \
+	    --rom baserom.z64 --file 38 \
 	    --out $(SELF)/$@
 
 romdisk/ifstatus.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 82 \
+	    --rom baserom.z64 --file 82 \
 	    --out $(SELF)/$@
 
 # The match clock's digits and its colon (src/dc/ifcommon.c). Fifteen
 # sprites, all of them the clock's, so the whole file goes in.
 romdisk/iftimer.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 165 \
+	    --rom baserom.z64 --file 165 \
 	    --out $(SELF)/$@
 
 # The pause menu's frame decals and its four player numbers
@@ -1810,7 +1810,7 @@ romdisk/iftimer.spr: $(SPRITETOOL_DEPS)
 # in.
 romdisk/ifpause.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 197 \
+	    --rom baserom.z64 --file 197 \
 	    --out $(SELF)/$@
 
 # The menus' sprites. Out of the menus' common file (0), the sprites
@@ -1858,68 +1858,68 @@ CAMANIM_BANKS = romdisk/mvopeningroom.cam romdisk/mvopeningcommon.cam \
 
 romdisk/sc1pintro.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank SC1PIntro \
+	    --rom baserom.z64 --bank SC1PIntro \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningroom.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningRoom \
+	    --rom baserom.z64 --bank OpeningRoom \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningcommon.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningCommon \
+	    --rom baserom.z64 --bank OpeningCommon \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningclash.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningClash \
+	    --rom baserom.z64 --bank OpeningClash \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningstandoff.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningStandoff \
+	    --rom baserom.z64 --bank OpeningStandoff \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningsector.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningSector \
+	    --rom baserom.z64 --bank OpeningSector \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningyoster.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningYoster \
+	    --rom baserom.z64 --bank OpeningYoster \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningjungle.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningJungle \
+	    --rom baserom.z64 --bank OpeningJungle \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningyamabuki.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningYamabuki \
+	    --rom baserom.z64 --bank OpeningYamabuki \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningcliff.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningCliff \
+	    --rom baserom.z64 --bank OpeningCliff \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningrun.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank OpeningRun \
+	    --rom baserom.z64 --bank OpeningRun \
 	    --out $(SELF)/$@
 
 romdisk/mvending.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank Ending \
+	    --rom baserom.z64 --bank Ending \
 	    --out $(SELF)/$@
 
 # The boss rung's approach and defeat cameras (src/dc/sc1pgame.c).
 romdisk/sc1pgameboss.cam: $(CAMANIMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_camanimexport.py \
-	    --rom base_rom/baserom.z64 --bank Boss \
+	    --rom baserom.z64 --bank Boss \
 	    --out $(SELF)/$@
 
 # The character select's six sprite files (src/dc/mnplayersvs.c): its
@@ -1934,7 +1934,7 @@ PLAYERS_BANKS = romdisk/mnplayers.spr romdisk/mn1pselect.spr \
 
 romdisk/mnplayers.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 17 \
+	    --rom baserom.z64 --file 17 \
 	    --luts 'RedCard=GateMan1P,GateMan2P,GateMan3P,GateMan4P,GateCom1P,GateCom2P,GateCom3P,GateCom4P' \
 	    --out $(SELF)/$@
 
@@ -1959,7 +1959,7 @@ romdisk/mnplayers.spr: $(SPRITETOOL_DEPS) Makefile
 # stood right of the narrow one's centre.
 romdisk/mn1pselect.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 23 \
+	    --rom baserom.z64 --file 23 \
 	    --only RedCard,1PlayerGameText,ClosingParenthesis,OpeningParenthesis,LevelColonText,StockColonText,OptionOutline,SmashLogo,OptionText,BestTimeText,TotalBestTimeText,TargetsText,PlatformsText,Sec,CSec \
 	    --luts 'RedCard=GateCP,17:GateMan1P,17:GateMan2P,17:GateMan3P,17:GateMan4P' \
 	    --out $(SELF)/$@
@@ -1970,27 +1970,27 @@ romdisk/mn1pselect.spr: $(SPRITETOOL_DEPS) Makefile
 # single sprite the decomp's list has no name for).
 romdisk/mn1pdiff.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 24 \
+	    --rom baserom.z64 --file 24 \
 	    --out $(SELF)/$@
 
 romdisk/ftstockszako.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 25 \
+	    --rom baserom.z64 --file 25 \
 	    --out $(SELF)/$@
 
 romdisk/ftemblems.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 20 \
+	    --rom baserom.z64 --file 20 \
 	    --out $(SELF)/$@
 
 romdisk/mnselect.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 21 \
+	    --rom baserom.z64 --file 21 \
 	    --out $(SELF)/$@
 
 romdisk/mngamemodes.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 18 \
+	    --rom baserom.z64 --file 18 \
 	    --out $(SELF)/$@
 
 # The stage select's own two files (src/dc/mnmaps.c): the icons, names,
@@ -2000,17 +2000,17 @@ MAPS_BANKS = romdisk/mnmaps.spr romdisk/mnfonts.spr
 
 romdisk/mnmaps.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 30 \
+	    --rom baserom.z64 --file 30 \
 	    --out $(SELF)/$@
 
 romdisk/mnfonts.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 33 \
+	    --rom baserom.z64 --file 33 \
 	    --out $(SELF)/$@
 
 romdisk/mnportraits.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 19 \
+	    --rom baserom.z64 --file 19 \
 	    --out $(SELF)/$@
 
 # The VS results screen's two own files (src/dc/scvsresults.c): its own
@@ -2023,13 +2023,13 @@ RESULTS_BANKS = romdisk/mnresults.spr romdisk/ifannounce.spr
 
 romdisk/mnresults.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 34 \
+	    --rom baserom.z64 --file 34 \
 	    --only TKOText,PlaceText,KOsText,PtsText,1PArrow,2PArrow,3PArrow,4PArrow,Wallpaper,Winner \
 	    --out $(SELF)/$@
 
 romdisk/ifannounce.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 37 \
+	    --rom baserom.z64 --file 37 \
 	    --out $(SELF)/$@
 
 # The unlock message's own file (9, src/dc/mnmessage.c) whole: the seven
@@ -2040,7 +2040,7 @@ romdisk/ifannounce.spr: $(SPRITETOOL_DEPS)
 # wallpaper behind them is the collage, already in the common bank.
 romdisk/mnmessage.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 9 \
+	    --rom baserom.z64 --file 9 \
 	    --out $(SELF)/$@
 
 # The DATA menu's own file (5, src/dc/mndata.c): the three option
@@ -2051,7 +2051,7 @@ romdisk/mnmessage.spr: $(SPRITETOOL_DEPS)
 # decal, the logo and the collage -- is in the common bank already.
 romdisk/mndata.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 5 \
+	    --rom baserom.z64 --file 5 \
 	    --only CharactersText,VSRecordText,SoundTestText,DataText,DataIconDark \
 	    --out $(SELF)/$@
 
@@ -2064,7 +2064,7 @@ romdisk/mndata.spr: $(SPRITETOOL_DEPS) Makefile
 # the logo and the collage).
 romdisk/mnoption.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 4 \
+	    --rom baserom.z64 --file 4 \
 	    --only StereoText,MonoText,SoundText,ScreenAdjustText,BackupClearText,OptionText,SettingsIconDark \
 	    --out $(SELF)/$@
 
@@ -2074,7 +2074,7 @@ romdisk/mnoption.spr: $(SPRITETOOL_DEPS) Makefile
 # are.
 romdisk/mnscreenadjust.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 15 \
+	    --rom baserom.z64 --file 15 \
 	    --out $(SELF)/$@
 
 # BACKUP CLEAR's own file (0x4d/77, src/dc/mnbackupclear.c): the header's
@@ -2089,7 +2089,7 @@ romdisk/mnscreenadjust.spr: $(SPRITETOOL_DEPS) Makefile
 # are (src/dc/mnplayersvs.c).
 romdisk/mnbackupclear.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 77 \
+	    --rom baserom.z64 --file 77 \
 	    --only HeaderBackupClear,OptionNewcomers,Option1PHighScore,OptionVSRecord,OptionBonusStageTime,OptionPrize,OptionAllDataClear,OptionCircle,IsOkayText,AreYouSureText,OptionYes,OptionNo \
 	    --luts "OptionYes=OptionYesHighlight,OptionYesNot,OptionConfirm;OptionNo=OptionNoHighlight,OptionNoNot" \
 	    --out $(SELF)/$@
@@ -2099,7 +2099,7 @@ romdisk/mnbackupclear.spr: $(SPRITETOOL_DEPS) Makefile
 # whole-file export, as mnvsrecord.spr and mncharacters.spr are.
 romdisk/mnbackupclearheader.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 78 \
+	    --rom baserom.z64 --file 78 \
 	    --out $(SELF)/$@
 
 # The Records tab's own file (0x1f/31, src/dc/mnvsrecord.c): the three
@@ -2109,7 +2109,7 @@ romdisk/mnbackupclearheader.spr: $(SPRITETOOL_DEPS) Makefile
 # mnfonts.spr are.
 romdisk/mnvsrecord.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 31 \
+	    --rom baserom.z64 --file 31 \
 	    --out $(SELF)/$@
 
 # The DATA menu's shared file (0x20/32): the DATA header banner and the
@@ -2118,7 +2118,7 @@ romdisk/mnvsrecord.spr: $(SPRITETOOL_DEPS) Makefile
 # open it now, the name the decomp's file's own.
 romdisk/mndatacommon.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 32 \
+	    --rom baserom.z64 --file 32 \
 	    --out $(SELF)/$@
 
 # The Character Data tab's own file (16, src/dc/mncharacters.c): the
@@ -2132,7 +2132,7 @@ romdisk/mndatacommon.spr: $(SPRITETOOL_DEPS) Makefile
 # sprite bank.
 romdisk/mncharacters.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 16 \
+	    --rom baserom.z64 --file 16 \
 	    --out $(SELF)/$@
 
 # The Sound Test tab's own file (0xc4/196, src/dc/mnsoundtest.c): the
@@ -2142,7 +2142,7 @@ romdisk/mncharacters.spr: $(SPRITETOOL_DEPS) Makefile
 # it so far.
 romdisk/mnsoundtest.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 196 \
+	    --rom baserom.z64 --file 196 \
 	    --out $(SELF)/$@
 
 # The congratulations screen's own 24 files (170-193, src/dc/mncongra.c):
@@ -2186,13 +2186,13 @@ MNCONGRA_BANKS = $(foreach f,$(FIGHTERS),romdisk/mncongra$(f)bottom.spr \
 define MNCONGRA_BANK_RULE
 romdisk/mncongra$(1)bottom.spr: $$(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --file $$(MNCONGRA_BOTTOM_FILE_$(1)) \
 	    --out $(SELF)/$$@
 
 romdisk/mncongra$(1)top.spr: $$(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --file $$(MNCONGRA_TOP_FILE_$(1)) \
 	    --out $(SELF)/$$@
 endef
@@ -2203,7 +2203,7 @@ $(foreach f,$(FIGHTERS),$(eval $(call MNCONGRA_BANK_RULE,$(f))))
 # mncharacters.spr are.
 romdisk/mnnocontroller.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 169 \
+	    --rom baserom.z64 --file 169 \
 	    --out $(SELF)/$@
 
 # The N64 logo (194, llN64LogoFileID; src/dc/mnstartup.c): one sprite,
@@ -2212,7 +2212,7 @@ romdisk/mnnocontroller.spr: $(SPRITETOOL_DEPS) Makefile
 # choice characternames.spr makes.
 romdisk/n64logo.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 194 \
+	    --rom baserom.z64 --file 194 \
 	    --out $(SELF)/$@
 
 # The openings' second scene, opening portraits (src/dc/mvopeningportraits.c):
@@ -2221,12 +2221,12 @@ romdisk/n64logo.spr: $(SPRITETOOL_DEPS) Makefile
 # (Link/Kirby/Donkey/Yoshi).
 romdisk/mvopeningportraitsset1.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 53 \
+	    --rom baserom.z64 --file 53 \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningportraitsset2.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 54 \
+	    --rom baserom.z64 --file 54 \
 	    --out $(SELF)/$@
 
 # How to Play's own file (198, src/dc/scexplain.c): the textbox
@@ -2238,7 +2238,7 @@ romdisk/mvopeningportraitsset2.spr: $(SPRITETOOL_DEPS) Makefile
 # three packs instead, below.
 romdisk/scexplaingraphics.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 198 \
+	    --rom baserom.z64 --file 198 \
 	    --out $(SELF)/$@
 
 # The staff roll's own file (195, src/dc/scstaffroll.c): the alphabet,
@@ -2251,7 +2251,7 @@ romdisk/scexplaingraphics.spr: $(SPRITETOOL_DEPS) Makefile
 # two packs instead, below.
 romdisk/scstaffrollgraphics.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 195 \
+	    --rom baserom.z64 --file 195 \
 	    --out $(SELF)/$@
 
 # The attract demo's twelve fighter name plates (file 12,
@@ -2264,7 +2264,7 @@ romdisk/scstaffrollgraphics.spr: $(SPRITETOOL_DEPS) Makefile
 # dSCAutoDemoFighterNameSpriteOffsets wants.
 romdisk/characternames.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 12 \
+	    --rom baserom.z64 --file 12 \
 	    --out $(SELF)/$@
 
 # The 1P game's "<player> VS <opponent>" card (src/dc/sc1pintro.c) loads four
@@ -2295,17 +2295,17 @@ SC1PSTAGECLEAR_BANKS = romdisk/sc1pstageclear1.spr romdisk/sc1pstageclear2.spr \
 
 romdisk/sc1pstageclear1.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 80 \
+	    --rom baserom.z64 --file 80 \
 	    --out $(SELF)/$@
 
 romdisk/sc1pstageclear2.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 81 \
+	    --rom baserom.z64 --file 81 \
 	    --out $(SELF)/$@
 
 romdisk/sc1pstageclear3.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 151 \
+	    --rom baserom.z64 --file 151 \
 	    --out $(SELF)/$@
 
 # The Continue prompt's own file (src/dc/mn1pcontinue.c):
@@ -2319,12 +2319,12 @@ MN1PCONTINUE_BANKS = romdisk/mn1pcontinue.spr
 
 romdisk/mn1pcontinue.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 79 \
+	    --rom baserom.z64 --file 79 \
 	    --out $(SELF)/$@
 
 romdisk/sc1pchallenger.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 10 \
+	    --rom baserom.z64 --file 10 \
 	    --out $(SELF)/$@
 
 SC1PINTRO_BANKS = romdisk/sc1pintro.spr romdisk/bonuspicture.spr \
@@ -2332,17 +2332,17 @@ SC1PINTRO_BANKS = romdisk/sc1pintro.spr romdisk/bonuspicture.spr \
 
 romdisk/sc1pintro.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 11 \
+	    --rom baserom.z64 --file 11 \
 	    --out $(SELF)/$@
 
 romdisk/bonuspicture.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 13 \
+	    --rom baserom.z64 --file 13 \
 	    --out $(SELF)/$@
 
 romdisk/bonuspictureplatform.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 14 \
+	    --rom baserom.z64 --file 14 \
 	    --out $(SELF)/$@
 
 # The openings' room wallpaper (90, src/dc/mvopeningroom.c): the file's
@@ -2353,7 +2353,7 @@ romdisk/bonuspictureplatform.spr: $(SPRITETOOL_DEPS) Makefile
 # the port loads (src/dc/mvopeningroom.h).
 romdisk/mvopeningroomwallpaper.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 90 \
+	    --rom baserom.z64 --file 90 \
 	    --out $(SELF)/$@
 
 # The Room's tic-1040 star wipe: relocData 63's two flat display lists,
@@ -2362,20 +2362,20 @@ romdisk/mvopeningroomwallpaper.spr: $(SPRITETOOL_DEPS) Makefile
 romdisk/mvroomwipe.bin: ../../../tools/export/ssb_roomwipeexport.py \
                         ../../../tools/lib/ssb_assets.py Makefile
 	cd ../../.. && python3 tools/export/ssb_roomwipeexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/$@
 
 # mvopeningrun.c's wallpaper: the one sprite of relocData 55, beside the
 # eight fighter scripts mvopeningrun.cam carries.
 romdisk/mvopeningrun.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 55 \
+	    --rom baserom.z64 --file 55 \
 	    --out $(SELF)/$@
 
 # mvopeningcliff.c's wallpaper: file 70's one sprite.
 romdisk/mvopeningcliff.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 70 \
+	    --rom baserom.z64 --file 70 \
 	    --out $(SELF)/$@
 
 # mvopeningcliff.c's two models out of relocData 68: the hills (drawn
@@ -2417,24 +2417,24 @@ ROOM_MODELS = romdisk/mvopeningroomdesk.mdl romdisk/mvopeningroombooks.mdl \
 
 romdisk/mvopeningroomdesk.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0x8df8 --name RoomDesk --out $(SELF)/$@
 
 romdisk/mvopeningroombooks.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0xa6f8 --animjoint 0xa7b0 --name RoomBook \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningroompencils.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0xaeb8 --animjoint 0xaf70 --name RoomPenc \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningroomlamp.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0xbdc0 --animjoint 0xbea0 --name RoomLamp \
 	    --out $(SELF)/$@
 
@@ -2450,27 +2450,27 @@ romdisk/mvopeningroomlamp.mdl: $(SCENEMODELTOOL_DEPS)
 # sets no render mode, so nothing else would have said.
 romdisk/mvopeningroomsunlight.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dl 0x24708 --dllinks --name RoomSun --out $(SELF)/$@
 
 romdisk/mvopeningroomoutside.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dl 0x24200 --dllinks --name RoomOut --out $(SELF)/$@
 
 romdisk/mvopeningroomhaze.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dl 0x098f8 --dllinks --name RoomHaze --out $(SELF)/$@
 
 romdisk/mvopeningroomtissues.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dl 0x0c690 --animdl 0x0c884 --name RoomTiss --out $(SELF)/$@
 
 romdisk/mvopeningroombossshadow.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dl 0x1f790 --dlhead 1 --animdl 0x1f924 --name RoomShad \
 	    --out $(SELF)/$@
 
@@ -2483,13 +2483,13 @@ romdisk/mvopeningroombossshadow.mdl: $(SCENEMODELTOOL_DEPS)
 # fade -- the ground fades in, the logo's own runs at once.
 romdisk/mvopeningroomdeskground.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0x22440 --dllinks --mobjsub 0x20480 \
 	    --matanim 0x225cc --name RoomDGnd --out $(SELF)/$@
 
 romdisk/mvopeningroomlogo.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0x1c4a8 --dllinks --mobjsub 0x1bc60 \
 	    --matanim 0x1c52c --name RoomLogo --out $(SELF)/$@
 
@@ -2503,13 +2503,13 @@ romdisk/mvopeningroomlogo.mdl: $(SCENEMODELTOOL_DEPS)
 # renumbering (read_matanim's `rows`).
 romdisk/mvopeningroombackground0.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0x07e98 --dllinks --entries 0-17 \
 	    --name RoomBg0 --out $(SELF)/$@
 
 romdisk/mvopeningroombackground1.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0x07e98 --dllinks --entries 0,18-50 \
 	    --mobjsub 0x042f8 --matanim 0x08788 \
 	    --name RoomBg1 --out $(SELF)/$@
@@ -2522,62 +2522,62 @@ romdisk/mvopeningroombackground1.mdl: $(SCENEMODELTOOL_DEPS)
 # materials.
 romdisk/mvopeningroomsnap.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0x1ca68 --dllinks --animjoint 0x1caf0 \
 	    --name RoomSnap --out $(SELF)/$@
 
 romdisk/mvopeningroomcloseupair.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0x1df28 --dllinks --animjoint 0x1e010 \
 	    --mobjsub 0x1dca0 --matanim 0x1dfd8 \
 	    --name RoomCUA --out $(SELF)/$@
 
 romdisk/mvopeningroomcloseupground.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dobjdesc 0x1f270 --dllinks --animjoint 0x1f330 \
 	    --mobjsub 0x1f0f8 --matanim 0x1f2f4 \
 	    --name RoomCUG --out $(SELF)/$@
 
 romdisk/mvopeningroomspotlight.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 52 \
+	    --rom baserom.z64 --file 52 \
 	    --dl 0x22e18 --dlhead 1 --mobjsub 0x22c90 --matanim 0x22f10 \
 	    --name RoomSpot --out $(SELF)/$@
 
 romdisk/mvopeningcliffhills.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 68 \
+	    --rom baserom.z64 --file 68 \
 	    --dobjdesc 0x37a0 --name CliffHil --noz --out $(SELF)/$@
 
 romdisk/mvopeningcliffocarina.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 68 \
+	    --rom baserom.z64 --file 68 \
 	    --dobjdesc 0x67a0 --animjoint 0x6850 --name CliffOca \
 	    --out $(SELF)/$@
 
 # mvopeningyamabuki.c's wallpaper: file 71's one sprite.
 romdisk/mvopeningyamabuki.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 71 \
+	    --rom baserom.z64 --file 71 \
 	    --out $(SELF)/$@
 
 # ... and its three models: the legs, their shadow and the Poke Ball.
 romdisk/mvopeningyamabukilegs.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 71 \
+	    --rom baserom.z64 --file 71 \
 	    --dobjdesc 0x9548 --animjoint 0x98c0 --name YamLegs --out $(SELF)/$@
 
 romdisk/mvopeningyamabukilegsshadow.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 71 \
+	    --rom baserom.z64 --file 71 \
 	    --dobjdesc 0xb2b0 --animjoint 0xb390 --dllinks --name YamShad \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningyamabukimball.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 71 \
+	    --rom baserom.z64 --file 71 \
 	    --dobjdesc 0xc9e0 --animjoint 0xcac0 --dllinks --name YamBall \
 	    --out $(SELF)/$@
 
@@ -2585,24 +2585,24 @@ romdisk/mvopeningyamabukimball.mdl: $(SCENEMODELTOOL_DEPS)
 # and its nest and ground out of file 67.
 romdisk/mvopeningyoster.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 93 \
+	    --rom baserom.z64 --file 93 \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningyosternest.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 67 \
+	    --rom baserom.z64 --file 67 \
 	    --dobjdesc 0x9808 --dllinks --entries 0-38 --name YosNest \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningyosternestrest.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 67 \
+	    --rom baserom.z64 --file 67 \
 	    --dobjdesc 0x9808 --dllinks --entries 0,4,39-72 --name YosNstB \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningyosterground.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 67 \
+	    --rom baserom.z64 --file 67 \
 	    --dobjdesc 0xb990 --animjoint 0xbf70 --dllinks --name YosGrnd \
 	    --out $(SELF)/$@
 
@@ -2611,23 +2611,23 @@ romdisk/mvopeningyosterground.mdl: $(SCENEMODELTOOL_DEPS)
 # Arwing out of file 161 flown on file 73's three tables.
 romdisk/mvopeningsector.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 73 \
+	    --rom baserom.z64 --file 73 \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningsectorwallpaper.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 74 \
+	    --rom baserom.z64 --file 74 \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningsectorgreatfox.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 73 \
+	    --rom baserom.z64 --file 73 \
 	    --dobjdesc 0xd820 --animjoint 0xda10 --dllinks --name SecFox \
 	    --out $(SELF)/$@
 
 romdisk/mvopeningsectorarwing.mdl: $(SCENEMODELTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_scenemodelexport.py \
-	    --rom base_rom/baserom.z64 --file 161 \
+	    --rom baserom.z64 --file 161 \
 	    --dobjdesc 0x2c30 --dllinks --anim 0xe110@73 --anim 0xe910@73 \
 	    --anim 0xf1c0@73 --name SecArw --out $(SELF)/$@
 
@@ -2636,19 +2636,19 @@ romdisk/mvopeningsectorarwing.mdl: $(SCENEMODELTOOL_DEPS)
 # one DObj, and a DObjDLLink tree with MObjs and both animation kinds.
 romdisk/mvopeningstandoffground.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --what standoffground --out $(SELF)/$@
 
 romdisk/mvopeningstandofflightning.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --what standofflight --out $(SELF)/$@
 
 # mvopeningclash.c's four wallpaper quadrants out of relocData 66: one display
 # list, one MObj, both animation kinds each.
 romdisk/mvopeningclashwall%.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --what clashwall$* --out $(SELF)/$@
 
 # mvopeningnewcomers.c's eight silhouettes out of relocData 61 and 62: a Show
@@ -2658,12 +2658,12 @@ romdisk/mvopeningclashwall%.mdl: $(EFFECTTOOL_DEPS)
 # four MObjs and a MatAnimJoint.
 romdisk/mvopeningruncrash.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --what runcrash --out $(SELF)/$@
 
 romdisk/mvopeningnc%.mdl: $(EFFECTTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_effectexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --what newcomers$* --out $(SELF)/$@
 
 # The item switch's own file (8, src/dc/mnvsitemswitch.c): the two
@@ -2674,20 +2674,20 @@ romdisk/mvopeningnc%.mdl: $(EFFECTTOOL_DEPS)
 # frame it sits in.
 romdisk/mnitemswitch.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 8 \
+	    --rom baserom.z64 --file 8 \
 	    --only LabelVSOptions,LabelItemSwitch,AppearanceNone,AppearanceVeryLow,AppearanceLow,AppearanceMiddle,AppearanceHigh,AppearanceVeryHigh,ToggleOn,ToggleOff,ToggleSlash,DecalButton,ItemList,Cursor \
 	    --out $(SELF)/$@
 
 # (the two --only lists live here, so the Makefile is a dependency)
 romdisk/mncommon.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 0 \
+	    --rom baserom.z64 --file 0 \
 	    --only SmashBrosCollage,OptionTabLeft,OptionTabMiddle,OptionTabRight,DecalPaper,SmashLogo,GameModeText,Digit0,Digit1,Digit2,Digit3,Digit4,Digit5,Digit6,Digit7,Digit8,Digit9,Infinity,ArrowR,ArrowL,Colon,OnText,OffText,AutoText,Slash,Percentage \
 	    --out $(SELF)/$@
 
 romdisk/mnmain.spr: $(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 1 \
+	    --rom baserom.z64 --file 1 \
 	    --out $(SELF)/$@
 
 # The 1P submenu's own file (2), less its four JP subtitles: the US
@@ -2695,13 +2695,13 @@ romdisk/mnmain.spr: $(SPRITETOOL_DEPS)
 # is the REGION_JP arm).
 romdisk/mn1p.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 2 \
+	    --rom baserom.z64 --file 2 \
 	    --only OptionTab,1PGameText,ControllerIconDark,1PText,TrainingModeText,Bonus1PracticeText,Bonus2PracticeText \
 	    --out $(SELF)/$@
 
 romdisk/mnvsmode.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 6 \
+	    --rom baserom.z64 --file 6 \
 	    --only VSStartText,RulePeriodText,TimeText,StockText,TeamText,TimePeriodText,MinText,StockPeriodText,VSOptionsText,ConsoleIconDark,VSText \
 	    --out $(SELF)/$@
 
@@ -2710,7 +2710,7 @@ romdisk/mnvsmode.spr: $(SPRITETOOL_DEPS) Makefile
 # names, the item switch's, and the dark console icon.
 romdisk/mnvsoptions.spr: $(SPRITETOOL_DEPS) Makefile
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 --file 7 \
+	    --rom baserom.z64 --file 7 \
 	    --only VSOptionsText,Bubble,HandicapText,TeamAttackText,StageSelectText,ItemSwitchText,DamageText,ConsoleIconDark \
 	    --out $(SELF)/$@
 
@@ -2720,7 +2720,7 @@ romdisk/mnvsoptions.spr: $(SPRITETOOL_DEPS) Makefile
 define FIGHTER_BANK_RULE
 romdisk/ft$(1).spr: $$(SPRITETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_spriteexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --fighter $(call fighter-name,$(1)) \
 	    --out $(SELF)/$$@
 endef
@@ -2752,12 +2752,12 @@ FGMTOOL_DEPS = ../../../tools/export/ssb_fgmexport.py ../../../tools/lib/ssb_sfx
 
 romdisk/fgm.ucd: $(FGMTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_fgmexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --outdir $(SELF)/romdisk
 
 romdisk/sndsets.bin: $(SNDSET_DEPS)
 	cd ../../.. && python3 tools/export/ssb_sndsets.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --out $(SELF)/$@
 
 # Everything the game reads at runtime, wherever it ends up: the romdisk
@@ -3464,7 +3464,7 @@ gucosf.o: gucosf.c $(SHIM_HDRS)
 # reads it, and it is wanted before a file is open.
 sintable.c: $(SINTOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_sinexport.py \
-	    --rom base_rom/baserom.z64 \
+	    --rom baserom.z64 \
 	    --emit-c $(SELF)/sintable.c
 sintable.o: sintable.c
 	kos-cc $(KOS_CFLAGS) -c $< -o $@

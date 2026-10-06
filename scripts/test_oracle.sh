@@ -159,7 +159,7 @@ set -u
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$(cd "$SCRIPT_DIR/.." && pwd)"
 
-ROM="base_rom/baserom.z64"
+ROM="baserom.z64"
 if [ ! -f "$ROM" ]; then
     echo "no baserom at $ROM -- skipping the oracle checks"
     exit 0

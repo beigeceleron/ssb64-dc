@@ -13,8 +13,8 @@ Specific remaining work may include:
 
 ## Building and testing
 
-`README.md` has the setup: docker or podman, bash, and your US ROM in
-`base_rom/`. Then:
+`README.md` has the setup: docker or podman, bash, and your US ROM as
+`baserom.z64` in the project root. Then:
 
 ```sh
 ./run.sh setup        # the image, the hook, a first build

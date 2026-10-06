@@ -89,7 +89,7 @@ import ssb_packexport as K              # noqa: E402
 from ssb_effectexport import build_pack  # noqa: E402
 
 ROOT = I.ROOT
-ROM_DEFAULT = os.path.join(ROOT, "base_rom", "baserom.z64")
+ROM_DEFAULT = os.path.join(ROOT, "baserom.z64")
 
 
 class EmptyBake(ValueError):

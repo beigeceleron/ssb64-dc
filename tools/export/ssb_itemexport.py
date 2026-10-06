@@ -1055,7 +1055,7 @@ def pack_items(rom, dump=False):
 
 def main():
     argv = sys.argv[1:]
-    rom_path = os.path.join(ROOT, "base_rom", "baserom.z64")
+    rom_path = os.path.join(ROOT, "baserom.z64")
     out = None
     if "--rom" in argv:
         rom_path = argv[argv.index("--rom") + 1]

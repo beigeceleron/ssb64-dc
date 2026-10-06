@@ -26,7 +26,6 @@ external/*/build-*/
 dc_env.local.sh
 
 # N64 baserom(s) — copyrighted, never commit
-base_rom/
 *.z64
 
 # Generated romdisks (built by the game Makefile)
