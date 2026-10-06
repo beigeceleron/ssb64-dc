@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [docker/**, scripts/ctr.sh]
+    paths: [docker/**, scripts/ctr.sh, .github/workflows/image.yml]
 
 permissions:
   contents: read
@@ -31,12 +31,15 @@ jobs:
       - name: free disk
         run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
       - uses: docker/setup-buildx-action@v3
+        id: buildx
       - name: log in to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
       # The layer cache lives in the registry (a tag per architecture), so a
       # retry after a late failure reuses the toolchain instead of
       # recompiling it. mode=max keeps the intermediate stages too.
       - name: build natively (compiles the toolchain unless cached)
+        env:
+          BUILDX_BUILDER: ${{ steps.buildx.outputs.name }}
         run: |
           . docker/pins.env
           cache="${IMAGE_REGISTRY}:buildcache-${{ matrix.arch }}"

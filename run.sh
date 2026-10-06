@@ -131,8 +131,9 @@ check_anmtier() { "$CTR_SH" run python3 tools/check/anm_tier_check.py --check; }
 check_vmu() { "$CTR_SH" run python3 tools/check/vmuimg.py selftest; }
 
 # What CI runs on every push: no ROM, no build. The reloc header
-# is generated first; reloc and standin read it.
-CI_CHECKS="io polyhdr vramfence camera vmu status reloc standin reverb"
+# is generated first; reloc reads it. standin needs the ROM-built
+# gusinf.c, so it is local-only.
+CI_CHECKS="io polyhdr vramfence camera vmu status reloc reverb"
 
 ## Run the checks that need no console: all of them, or the ones named.
 ## `./run.sh test`, `./run.sh test io camera`, `./run.sh test --list`.
