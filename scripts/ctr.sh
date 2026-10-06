@@ -32,9 +32,9 @@ cd "$REPO_ROOT"
 
 # The tag records what is inside, so a bumped pin is a different image.
 # IMAGE_LAYOUT moves when the Dockerfile adds something the build needs
-# (arm1: the AICA's arm-eabi compiler), so an older image is
+# (arm1: the AICA's arm-eabi compiler; arm2: the baker's i386 cross-compiler and qemu on non-x86), so an older image is
 # rebuilt rather than found wanting halfway through a build.
-IMAGE_LAYOUT=arm1
+IMAGE_LAYOUT=arm2
 IMAGE="${SSB64_IMAGE:-ssb64-dc/dev:${TOOLCHAIN_PROFILE}-${KOS_REV:0:7}-${DECOMP_REV:0:7}-${N64_REV:0:7}-${SH4ZAM_REV:0:7}-${IMG4DC_REV:0:7}-${IMAGE_LAYOUT}}"
 
 pick_runtime() {
