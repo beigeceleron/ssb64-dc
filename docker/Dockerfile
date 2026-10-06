@@ -203,12 +203,19 @@ ENV SSB_CDI4DC=/opt/ssb64-dc/bin/cdi4dc
 # The intro-crowd baker (`make hosttest BAKER=1`) is the port's own
 # draw path built for the host as a 32-bit program: the SH-4's pointers are 32
 # bits and the console's video RAM and registers are mapped at their real
-# addresses, both of which a 64-bit process cannot do. So the host compiler
-# needs its 32-bit libc. Debian only -- musl has no multilib.
+# addresses, both of which a 64-bit process cannot do. On x86 the host
+# compiler needs its 32-bit libc (gcc -m32). Elsewhere (arm64) there is no
+# multilib, so the Makefile cross-compiles an i386 binary with
+# gcc-i686-linux-gnu and runs it under qemu-i386. Debian only -- musl has no
+# multilib.
 RUN if command -v apt-get >/dev/null 2>&1; then \
         export DEBIAN_FRONTEND=noninteractive; \
         apt-get update; \
-        apt-get install -y --no-install-recommends gcc-multilib; \
+        case "$(dpkg --print-architecture)" in \
+        amd64) apt-get install -y --no-install-recommends gcc-multilib ;; \
+        *) apt-get install -y --no-install-recommends \
+               gcc-i686-linux-gnu libc6-dev-i386-cross qemu-user ;; \
+        esac; \
         rm -rf /var/lib/apt/lists/*; \
     fi
 

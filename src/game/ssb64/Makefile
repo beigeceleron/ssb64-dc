@@ -4961,7 +4961,20 @@ HOST_RUN ?= ./hosttest_ft
 # objdisplay.c, ftdisplaymain.c, ftshadow.c, lbcommon.[ch], objpvr.h): no PVR,
 # nothing drawn. BAKER=1 leaves it off and puts KOS's own dc/pvr.h and a
 # recording pvr_* (hoststubs/bakepvr.c) in its place.
+# The baker is a 32-bit program (see docker/Dockerfile). On an x86 host
+# that is gcc -m32. Anywhere else (an arm64 Linux or macOS container) there is
+# no 32-bit gcc and nothing that runs 32-bit x86 code natively, so it is
+# cross-compiled to an i386 binary and run under qemu-i386 through a
+# launcher script that has bake_host's name. HOST32=cross forces that.
+HOST_GCC = gcc
+HOST32 ?= $(if $(filter x86_64 i686 i386,$(shell uname -m)),native,cross)
 ifdef BAKER
+ifeq ($(HOST32),cross)
+HOST_GCC = i686-linux-gnu-gcc
+HOST_BIN = $(HOST_OUT).i386
+else
+HOST_BIN = $(HOST_OUT)
+endif
 HOST_DRAW_CFLAGS = -m32 -DFT_BAKER -include stddef.h '-D__pure2=__attribute__((__const__))' \
     -idirafter $(KOS_BASE)/include -idirafter $(KOS_BASE)/kernel/arch/dreamcast/include -idirafter $(KOS_BASE)/addons/include \
     -I hoststubs
@@ -5245,7 +5258,7 @@ hosttest: hosttest_ft.c $(wildcard hosttest/*.c) ../../dc/ftcommon.c ../../dc/ft
           romdisk/bonus3.stg \
           $(DC_HDRS) $(SHIM_HDRS)
 	for f in $(HOST_DECOMP_SRCS); do \
-	    gcc $(HOST_CFLAGS) $(DECOMP_CFLAGS) $(OVL_NOLOAD_CFLAGS) \
+	    $(HOST_GCC) $(HOST_CFLAGS) $(DECOMP_CFLAGS) $(OVL_NOLOAD_CFLAGS) \
 	        -include sys/debug.h -include sc/scene.h -include syaudio.h \
 	        -include sys/dma.h -c \
 	        $(SSB_DECOMP_DIR)/src/$$f -o hosttest_$$(basename $$f .c).o \
@@ -5264,11 +5277,11 @@ hosttest: hosttest_ft.c $(wildcard hosttest/*.c) ../../dc/ftcommon.c ../../dc/ft
 	for o in $(HOST_OVL3_OBJS); do \
 	    objcopy --rename-section .bss=ovl3_noload $$o || exit 1; \
 	done
-	gcc $(HOST_CFLAGS) $(DECOMP_CFLAGS) -c ../../dc/ftmain.c \
+	$(HOST_GCC) $(HOST_CFLAGS) $(DECOMP_CFLAGS) -c ../../dc/ftmain.c \
 	    -o hosttest_ftmain.o
 # sys/objanim.c, through the port file that #includes it (the colour
 # lerp). The host is little-endian too, which is the point.
-	gcc $(HOST_CFLAGS) $(DECOMP_CFLAGS) \
+	$(HOST_GCC) $(HOST_CFLAGS) $(DECOMP_CFLAGS) \
 	    -include sys/debug.h -include sc/scene.h -include syaudio.h \
 	    -include sys/dma.h -c ../../dc/objanim.c -o hosttest_objanim.o
 # -no-pie: particlebanks.ld defines the bank addresses as absolute
@@ -5276,7 +5289,7 @@ hosttest: hosttest_ft.c $(wildcard hosttest/*.c) ../../dc/ftcommon.c ../../dc/ft
 # comes out as base+0xAC7340 and src/dc/dma.c finds no range for it. The
 # target is a fixed-address ELF and never had the problem; the host link
 # has to be told.
-	gcc $(HOST_CFLAGS) -no-pie -I. -o $(HOST_OUT) hosttest_ft.c $(HOST_DRAW_SRCS) ../../dc/ftcommon.c \
+	$(HOST_GCC) $(HOST_CFLAGS) -no-pie -I. -o $(or $(HOST_BIN),$(HOST_OUT)) hosttest_ft.c $(HOST_DRAW_SRCS) ../../dc/ftcommon.c \
 	    ../../dc/itemmodel.c ../../dc/itbox.c ../../dc/ittaru.c ../../dc/itcapsule.c ../../dc/itegg.c ../../dc/itmball.c ../../dc/itmew.c ../../dc/ittosakinto.c ../../dc/itsawamura.c ../../dc/itkabigon.c ../../dc/itmlucky.c ../../dc/itnyars.c ../../dc/itdogas.c ../../dc/itiwark.c ../../dc/itstarmie.c ../../dc/itlizardon.c ../../dc/itspear.c ../../dc/itkamex.c ../../dc/itpippi.c ../../dc/ftmanager.c ../../dc/ftcomputer.c ../../dc/wpmanager.c ../../dc/wpattrs.c ../../dc/wpmain.c ../../dc/wpprocess.c ../../dc/wpdisplay.c ../../dc/wpmap.c ../../dc/itmanager.c ../../dc/itempack.c ../../dc/itmain.c ../../dc/itprocess.c ../../dc/itvisuals.c ../../dc/itdisplay.c ../../dc/itmap.c ../../dc/itstar.c ../../dc/ittomato.c ../../dc/itheart.c ../../dc/itsword.c ../../dc/itbat.c ../../dc/ithammer.c ../../dc/itharisen.c ../../dc/itfflower.c ../../dc/itlgun.c ../../dc/itstarrod.c ../../dc/itgshell.c ../../dc/itrshell.c ../../dc/itnbumper.c ../../dc/itgbumper.c ../../dc/itpowerblock.c ../../dc/itpakkun.c ../../dc/itglucky.c ../../dc/itporygon.c ../../dc/itmarumine.c ../../dc/ithitokage.c ../../dc/itfushigibana.c ../../dc/ittarget.c ../../dc/ittarubomb.c ../../dc/itmsbomb.c ../../dc/itbombhei.c ../../dc/gmrumble.c ../../dc/ftcommontwister.c ../../dc/grhyrule.c ../../dc/grjungle.c ../../dc/ftcommontaru.c ../../dc/grzebes.c ../../dc/gryoster.c ../../dc/grpupupu.c ../../dc/grinishie.c ../../dc/grcastle.c ../../dc/gryamabuki.c ../../dc/grsector.c ../../dc/grbonus3.c hosttest_ftmain.o ../../dc/ftparam.c ../../dc/ftshadow.c \
 	    ../../dc/fighter.c ../../dc/assetroot.c \
 	    ../../dc/ifcommon.c ../../dc/ifscreenflash.c \
@@ -5322,4 +5335,8 @@ hosttest: hosttest_ft.c $(wildcard hosttest/*.c) ../../dc/ftcommon.c ../../dc/ft
 	    sintable.c \
 	    gusinf.c gucosf.c \
 	    $(HOST_DECOMP_OBJS) hosttest_particlebanks.ld hosttest_wpattrs.ld -lm
+ifeq ($(and $(BAKER),$(filter cross,$(HOST32))),cross)
+	printf '#!/bin/sh\nexec qemu-i386 -L /usr/i686-linux-gnu "$$(dirname "$$0")/%s.i386" "$$@"\n' $(notdir $(HOST_OUT)) > $(HOST_OUT)
+	chmod +x $(HOST_OUT)
+endif
 	$(HOST_RUN)
