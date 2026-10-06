@@ -4967,10 +4967,12 @@ HOST_RUN ?= ./hosttest_ft
 # cross-compiled to an i386 binary and run under qemu-i386 through a
 # launcher script that has bake_host's name. HOST32=cross forces that.
 HOST_GCC = gcc
+HOST_OBJCOPY = objcopy
 HOST32 ?= $(if $(filter x86_64 i686 i386,$(shell uname -m)),native,cross)
 ifdef BAKER
 ifeq ($(HOST32),cross)
 HOST_GCC = i686-linux-gnu-gcc
+HOST_OBJCOPY = i686-linux-gnu-objcopy
 HOST_BIN = $(HOST_OUT).i386
 else
 HOST_BIN = $(HOST_OUT)
@@ -5271,11 +5273,11 @@ hosttest: hosttest_ft.c $(wildcard hosttest/*.c) ../../dc/ftcommon.c ../../dc/ft
 # and take no rename; ft/ftanim is overlay 2 but the host link has no
 # need of it.
 	for o in $(HOST_OVL2_OBJS); do \
-	    objcopy --rename-section .bss=ovl2_noload $$o || exit 1; \
+	    $(HOST_OBJCOPY) --rename-section .bss=ovl2_noload $$o || exit 1; \
 	done
-	objcopy --rename-section .bss=ovl1_noload hosttest_scsubsyscontroller.o
+	$(HOST_OBJCOPY) --rename-section .bss=ovl1_noload hosttest_scsubsyscontroller.o
 	for o in $(HOST_OVL3_OBJS); do \
-	    objcopy --rename-section .bss=ovl3_noload $$o || exit 1; \
+	    $(HOST_OBJCOPY) --rename-section .bss=ovl3_noload $$o || exit 1; \
 	done
 	$(HOST_GCC) $(HOST_CFLAGS) $(DECOMP_CFLAGS) -c ../../dc/ftmain.c \
 	    -o hosttest_ftmain.o
