@@ -18,9 +18,10 @@ jobs:
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
-      # KallistiOS's prebuilt amd64 toolchain, so the image takes minutes
-      # rather than the hour a from-source toolchain does.
-      - name: build the image
-        run: ./run.sh image --prebuilt
+      # Pulls the image .github/workflows/image.yml published for these
+      # pins. If there is none (a pin just changed and image has not run
+      # yet) this compiles the toolchain, which takes about an hour.
+      - name: get the image
+        run: ./run.sh image
       - name: checks
         run: ./run.sh test --ci
