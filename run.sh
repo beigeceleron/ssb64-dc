@@ -46,11 +46,17 @@ cmd_build() { "$CTR_SH" run ./scripts/build_target.sh "${1:-ssb64}"; }
 ## the ELF. Debug knobs (src/dc/db.h) go in EXTRA_CFLAGS:
 ##   EXTRA_CFLAGS=-DDB_BOOT_SCENE=nSCKindVSBattle ./run.sh disc
 ## `EXTRA_CFLAGS= ./run.sh disc` is a clean build with none.
+## SSB_DISC_PAD=0 leaves the zero pad off the image (scripts/make_cdi.sh):
+## a much smaller and quicker build, with the game's bytes at the inner
+## edge of the disc instead of the outer -- for when only the bytes matter.
 cmd_disc() { "$CTR_SH" run ./scripts/make_cdi.sh "${1:-ssb64}"; }
 
 ## The release disc: build-dc/ssb64-release.cdi. No debug facility, no log
 ## output, no knobs -- the build a player gets. Takes no flags (EXTRA_CFLAGS
 ## is refused); it has its own image, so `./run.sh disc` is not overwritten.
+## SSB_DISC_PAD=0 passes through, leaving the pad off for a quicker build:
+## for an emulator or a byte comparison, not for a disc to ship, because the
+## pad is what puts the release's bytes at the outer edge on a real GD-ROM.
 cmd_release() {
     RELEASE=1 EXTRA_CFLAGS= EXTRA_LDFLAGS= "$CTR_SH" run ./scripts/make_cdi.sh ssb64
 }
