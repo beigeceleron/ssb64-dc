@@ -21,7 +21,11 @@ see its repository.
                        gfxdis, the reference display-list disassembler used
                        by tools/check/verify_dl.py.
   sh4zam               https://github.com/gyrovorbis/sh4zam
-                       SH-4 math routines.
+                       SH-4 math routines. MIT License, Copyright (c) 2025,
+                       2026 Falco Girgis and SH4ZAM Contributors. The port
+                       calls it only through SHZ_INLINE functions, so its
+                       code is compiled into the SH-4 binary; its notice must
+                       travel with any disc you distribute.
   img4dc               https://github.com/Kazade/img4dc
                        The .cdi disc-image builder.
   dreamcast-toolchain  docker.io/pcercuei/dreamcast-toolchain

@@ -28,6 +28,9 @@ credit for this project being possible:
    which I used as a reference when stuck.
 4. [AICAFlow](https://github.com/dfchil/AICAflow) by [dfchil](https://github.com/dfchil)
    as a reference to utilize the Dreamcast AICA's DSP.
+5. [SH4ZAM](https://github.com/gyrovorbis/sh4zam) by
+   [Falco Girgis](https://github.com/gyrovorbis), whose SH-4 math routines
+   the render core can build against.
 
 ### LLM use
 
