@@ -20,7 +20,7 @@
 #   SSB64_REGISTRY=<repo> where to pull from (default: IMAGE_REGISTRY in pins.env)
 #   SSB64_ROM=<file>      mount the baserom from outside the repo (at ./baserom.z64)
 # Passed through when set: EXTRA_CFLAGS, EXTRA_LDFLAGS, MTX_BACKEND,
-# SSB64_BUILD_JOBS, RELEASE.
+# SSB64_BUILD_JOBS, SSB_DISC_NO_BUNDLE, SSB_DISC_PAD, RELEASE.
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -106,7 +106,7 @@ run)
     # reaches the Makefile (scripts/build_target.sh, scripts/make_cdi.sh
     # forward them; src/dc/db.h lists the knobs).
     for v in EXTRA_CFLAGS EXTRA_LDFLAGS MTX_BACKEND SSB64_BUILD_JOBS \
-             SSB_DISC_NO_BUNDLE RELEASE; do
+             SSB_DISC_NO_BUNDLE SSB_DISC_PAD RELEASE; do
         [ -n "${!v:-}" ] && ARGS+=(-e "$v")
     done
     # Same uid inside as out, so nothing in the tree ends up root-owned.
