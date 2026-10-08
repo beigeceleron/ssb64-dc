@@ -13,6 +13,8 @@ fully playable. The remaining work is minor visual bugs, and nice-to-haves.
 ROM: See [ssb-decomp-re](https://github.com/VetriTheRetri/ssb-decomp-re) requirements
 for this as they are the same.
 
+[See a demo of it working on real hardware.](https://www.youtube.com/watch?v=62vHxh6RL3E&lc)
+
 ## Acknowledgements
 
 This project derives from or uses other people's work, and they deserve most of the
