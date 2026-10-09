@@ -1,23 +1,29 @@
 /* primdump.h -- -DDB_PRIM_DUMP=<tic>: the PVR's own input for one frame of a
  * 1P team card's crowd, on the serial line.
  *
- * What tools/bake/ (the in-build baker) draws from is the stream
- * the port hands the TA: polygon headers, vertices, the textures and the
- * palette those headers name. This records that stream from a real run so the
- * rasteriser can be checked against the frame the console drew from it, before
- * the same stream is produced on the host with no console at all.
+ * This is the stream the port hands the TA: polygon headers, vertices, the
+ * textures and the palette those headers name. Two things read it. The
+ * in-build baker (src/game/ssb64/bakehost.c, over hoststubs/bakepvr.c)
+ * draws the 1P team cards from the same lines on the host, with no console;
+ * tools/check/primdump.py reads them back to diff one run against another.
  *
  * sc1pintro.c calls primdump_track(tic) from each crowd fighter's display
  * proc; on update <tic> every pvr_prim (linker --wrap) is copied, and on the
  * next update the lot is written out:
  *   primdump: begin <tic> <units>            units of 32 bytes
  *   pd <unit> <4 units, hex>                 headers and vertices in order
- *   pdt <vram offset> <len> <hex>            a texture, 64 bytes a line
+ *   pdt <vram offset> <len>                  a texture the frame named, then
+ *   pdx <vram offset> <hex>                  64 bytes of it, 128 hex chars
  *   pdp <first entry> <8 entries, hex>       the palette RAM, then
  *   primdump: pal cfg <n>                    its entry format
  *   primdump: end <tic>
- * tools/check/primdump.py reads it back. Needs
- * EXTRA_LDFLAGS=-Wl,--wrap=pvr_prim.
+ * A 32-byte unit is a polygon header or a vertex and nothing else, which is
+ * what the diff reports on rather than a byte offset.
+ *
+ * Both sides write the same lines, so a console run and a host run of the
+ * same frame can be diffed. The console needs
+ * EXTRA_LDFLAGS=-Wl,--wrap=pvr_prim; the host baker calls primdump_record
+ * directly from bakepvr.c.
  */
 #ifndef DC_PRIMDUMP_H
 #define DC_PRIMDUMP_H

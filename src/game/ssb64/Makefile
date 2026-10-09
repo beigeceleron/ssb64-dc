@@ -300,6 +300,10 @@ KOS_CFLAGS += -I../../dc $(DECOMP_INC)
 # `make EXTRA_CFLAGS=-DDB_BOOT_STAGE=nGRKindSector` boots the battle
 # on another stage without walking the menus for it (src/dc/db.h).
 KOS_CFLAGS += $(EXTRA_CFLAGS)
+# The matrix backend this build uses: SH4ZAM (the default -- see the block
+# below) or SCALAR. Set here, above the flag stamp, so the stamp records what
+# the build actually used rather than what the environment happened to say.
+MTX_BACKEND ?= SH4ZAM
 # Make tracks sources and headers, not flags: a build with a different
 # EXTRA_CFLAGS or MTX_BACKEND used to need its objects deleted by hand
 # (db.o at the least, and whichever else read the define). The flags are
@@ -318,11 +322,20 @@ ifneq ($(wildcard $(CFLAGS_STAMP))|$(strip $(shell cat $(CFLAGS_STAMP) 2>/dev/nu
 $(shell printf '%s\n' '$(CFLAGS_NOW)' > $(CFLAGS_STAMP))
 endif
 
-# SH4ZAM: `make MTX_BACKEND=SH4ZAM` builds the render core against the SH4's
-# XMTRX/FTRV instead of scalar C. Both paths stay in the tree so a regression
-# can be bisected on the target; see src/dc/mtx.h.
+# SH4ZAM: the render core runs on the SH-4's FPU back-bank -- XMTRX/FTRV for
+# the joint walk and the vertex transform, FSCA and FSRRA under the sines and
+# the reciprocals -- instead of plain C. This is the DEFAULT; `make
+# MTX_BACKEND=SCALAR` builds the plain C. Both paths stay in the tree so a
+# regression can be bisected on the target. Measured in a four-CPU soak the
+# default is 2.17x on fighter_frame and 2.4x on the per-vertex stage, about
+# 2 ms of a 16.7 ms frame (src/dc/mtx.h has the numbers). The headers are a
+# hard dependency now, so say so plainly rather than fail on a missing
+# include.
 ifeq ($(MTX_BACKEND),SH4ZAM)
 SH4ZAM_DIR ?= /opt/sh4zam
+ifeq ($(wildcard $(SH4ZAM_DIR)/include/sh4zam/shz_sh4zam.h),)
+$(error MTX_BACKEND=SH4ZAM (the default) needs $(SH4ZAM_DIR)/include/sh4zam -- set SH4ZAM_DIR, or build MTX_BACKEND=SCALAR)
+endif
 KOS_CFLAGS += -DMTX_BACKEND=MTX_BACKEND_SH4ZAM -I$(SH4ZAM_DIR)/include
 endif
 
