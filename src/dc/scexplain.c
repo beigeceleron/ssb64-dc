@@ -1,10 +1,11 @@
 /* scexplain.c -- see scexplain.h. Function-for-function from
  * ssb-decomp-re/src/sc/sccommon/scexplain.c, REGION_US arms; the line
  * numbers in each function's own comment are the decomp's. The three
- * DIVERGES (the Hyrule ground/collision/wallpaper fallback, the
- * compiled-in KeyEvent/ExplainPhase data, and the missing control-stick
- * diagram) are explained once, in scexplain.h's own header comment --
- * not repeated at every site they touch.
+ * DIVERGES (the ground loaded as its own pack through grStageAcquire
+ * rather than by gr/grmain.c, the compiled-in KeyEvent/ExplainPhase data,
+ * and the missing control-stick diagram) are explained once, in
+ * scexplain.h's own header comment -- not repeated at every site they
+ * touch.
  */
 #include "scexplain.h"
 #include "overlay.h"
@@ -1817,11 +1818,13 @@ const SCExplainPhaseEntry *sSCExplainPhase;
 // 0x8018E9F0
 SCExplainMain sSCExplainStruct;
 
-/* The stage this scene holds a reference on -- always Hyrule, the
- * fallback this scene's own FuncStart always takes (see scexplain.h's
- * header note); src/dc/scautodemo.c's own sSCAutoDemoStageHeld/Kind
- * pair, minus Kind since the kind here is never anything else. */
+/* The stage this scene holds a reference on: nGRKindExplain, the kind
+ * the decomp's own scExplainSetBattleState writes into the battle state
+ * and the one this scene's FuncStart acquires, or Hyrule when the pack
+ * will not load -- src/dc/scautodemo.c's own sSCAutoDemoStageHeld/Kind
+ * pair, which is why the kind is carried rather than assumed. */
 static u8 sSCExplainStageHeld;
+static s32 sSCExplainStageKind;
 
 // // // // // // // // // // // //
 //                               //
@@ -2594,11 +2597,13 @@ GObj* scExplainMakeSceneInterface(void)
  * wallpaper camera is gone, its substitute grWallpaperMakeDecideKind
  * moved after gmCameraMakeBattleCamera; efManagerInitEffects is
  * efManagerLoadEffectBank; mpCollisionInitGroundData is
- * stage_bind_collision) plus this file's own two: the Hyrule ground
- * fallback block (see scexplain.h) where the decomp has none at all,
- * and scExplainMakeControlStickCamera dropped from the call sequence
- * entirely (see scexplain.h; nothing else here reads what it would
- * have drawn). */
+ * stage_bind_collision) plus this file's own two: the ground block below
+ * -- grStageAcquire(nGRKindExplain), the same acquire scVSBattle's and
+ * scAutoDemo's FuncStarts make, with the same "pack that will not load ->
+ * Hyrule" arm, where the decomp lets gr/grmain.c load the kind's map and
+ * has no fallback at all -- and scExplainMakeControlStickCamera dropped
+ * from the call sequence entirely (see scexplain.h; nothing else here
+ * reads what it would have drawn). */
 void scExplainFuncStart(void)
 {
     GObj *fighter_gobj;
@@ -2608,20 +2613,29 @@ void scExplainFuncStart(void)
 
     scExplainSetBattleState();
 
-    /* DIVERGES: nGRKindExplain has no exported pack (relocData 267/115
-     * are real ground/map data but no tool in this port exports them --
-     * see scexplain.h) -- fall back to Hyrule for ground, collision and
-     * wallpaper, the same "no pack -> Hyrule" substitute
-     * src/dc/scvsbattle.c's own scVSBattleStartScene and
-     * src/dc/scautodemo.c's own scAutoDemoFuncStart already use,
-     * unconditional here since Explain's gkind never has a pack to try
-     * first. Without some bound stage, stage_bind_collision below
-     * leaves gMPCollisionGeometry untouched and the player-position
-     * read a few lines down dereferences it unconditionally. */
+    /* The stage, exactly src/dc/scvsbattle.c's own scVSBattleStartScene
+     * block and src/dc/scautodemo.c's own scAutoDemoFuncStart one: the
+     * kind is the battle state's, which scExplainSetBattleState above set
+     * to nGRKindExplain -- the decomp's own line, and the ground the
+     * game's gr/grmain.c loads for this scene. DIVERGES, defensively: a
+     * NULL here is a pack that would not load; it plays on Hyrule, said
+     * on the log, rather than starting the demo with no ground, which
+     * stage_bind_collision below would leave untouched and the
+     * player-position read a few lines down dereferences
+     * unconditionally. */
     {
-        Stage *stage = grStageAcquire(nGRKindHyrule);
+        s32 gkind = gSCManagerBattleState->gkind;
+        Stage *stage = grStageAcquire(gkind);
 
+        if (stage == NULL)
+        {
+            syDebugPrintf("scExplainFuncStart: no pack for stage %d, "
+                          "playing Hyrule\n", (int)gkind);
+            gSCManagerBattleState->gkind = nGRKindHyrule;
+            stage = grStageAcquire(nGRKindHyrule);
+        }
         sSCExplainStageHeld = (stage != NULL);
+        sSCExplainStageKind = gSCManagerBattleState->gkind;
         if (stage != NULL)
         {
             stage_bind(stage);
@@ -2773,9 +2787,10 @@ void scExplainFuncDraw(void)
  * itself only on the exit paths (23rd phase, or scExplainDetectExit's
  * own A/B/START), from inside the task, before scManagerFuncUpdate
  * below returns -- so this does not set it again either, the same
- * reasoning scAutoDemoStartScene's own header gives. The Hyrule release
- * is this file's own addition (the decomp has no stage of its own to
- * release) -- see scexplain.h. */
+ * reasoning scAutoDemoStartScene's own header gives. The stage release
+ * is this file's own addition (the decomp's ground lives as long as its
+ * scene does, in the scene heap) and it gives back whichever kind
+ * FuncStart actually took -- see scexplain.h. */
 void scExplainStartScene(void)
 {
     syUtilsSetRandomSeedPtr(&dSCExplainRandomSeed1);
@@ -2789,7 +2804,7 @@ void scExplainStartScene(void)
 
     if (sSCExplainStageHeld)
     {
-        grStageRelease(nGRKindHyrule);
+        grStageRelease(sSCExplainStageKind);
         sSCExplainStageHeld = 0;
     }
     lbpTexFreeAll();
@@ -2828,6 +2843,7 @@ void scExplainOverlayLoad(void)
     OVERLAY_CLEAR(sSCExplainPhase);
     OVERLAY_CLEAR(sSCExplainStruct);
     OVERLAY_CLEAR(sSCExplainStageHeld);
+    OVERLAY_CLEAR(sSCExplainStageKind);
     /* .data the game writes (see their definition): the N64's reload
      * brings them back from ROM, so they go back to 1 here. */
     dSCExplainRandomSeed1 = 0x00000001;

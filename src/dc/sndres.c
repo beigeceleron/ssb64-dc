@@ -257,20 +257,27 @@ int sndres_compose(s32 scene, SndResSet *set)
      * reached through the normal VS setup flow set_add_players reads
      * (gSCManagerTransferBattleState), since scExplainSetBattleState
      * hardcodes its own two players directly, and it never has a real
-     * gGCManagerSceneData.gkind to read either, since nGRKindExplain has
-     * no exported pack and scExplainFuncStart always falls back to
-     * Hyrule instead (src/dc/scexplain.h's own header note). Both
-     * fighters and the stage are named directly here for exactly that
-     * reason -- this scene's own composition can never vary. Without
-     * this case, sndres_compose's
+     * gGCManagerSceneData.gkind to read either, since that state leaves
+     * the scene field alone. Both fighters and the stage are named
+     * directly here for exactly that reason -- this scene's own
+     * composition can never vary. Without this case, sndres_compose's
      * default (0, "no change") left whichever scene was resident before
      * the direct DB_BOOT_SCENE jump staged, and Mario/Luigi's hit and
-     * voice sounds and Hyrule's own BGM wave all logged "not resident". */
+     * voice sounds and the stage's own BGM wave all logged "not
+     * resident".
+     *
+     * nGRKindExplain's group is a real one -- "stage:Explain", the How to
+     * Play track, tools/export/ssb_sndsets.py's STAGE_KINDS -- because the
+     * scene now binds the kind's own pack (src/dc/scexplain.c) and
+     * mpCollisionSetPlayBGM plays that pack's bgm_id through it, exactly
+     * as src/dc/sndres.h's SNDRES_GROUP_ATTRACT note always said it would.
+     * The attract loop's own use of the same track is that group's, not
+     * this one's. */
     case nSCKindExplain:
         set_add_group(set, SNDRES_GROUP_CORE);
         set_add_group(set, SNDRES_GROUP_FIGHTER + nFTKindMario);
         set_add_group(set, SNDRES_GROUP_FIGHTER + nFTKindLuigi);
-        set_add_group(set, SNDRES_GROUP_STAGE + nGRKindHyrule);
+        set_add_group(set, SNDRES_GROUP_STAGE + nGRKindExplain);
         return 1;
 
     /* The ladder's VS card. NOT a battle, and that is the

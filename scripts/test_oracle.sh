@@ -63,7 +63,7 @@
 #                      joint to MObj maps, geometry, textures and palettes
 #                      against a fresh MeshBaker bake of the ROM, and which
 #                      script each joint / MObj got
-#   model_pack_check.py the fighter (27), stage (38 + the bonus platforms)
+#   model_pack_check.py the fighter (27), stage (39 + the bonus platforms)
 #                      and item/weapon/alt (61) model packs against a second
 #                      F3DEX2 interpreter that shares no code with the baker
 #                      (raw words, relocation-chain pointers, its own

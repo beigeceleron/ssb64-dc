@@ -527,9 +527,16 @@ MANIFEST = [
     # play-order constraint yet and it sits last.
     # adds the three packs the file's non-sprite half bakes
     # to (tools/export/ssb_explainexport.py): the control-stick diagram, its
-    # tap-spark flash and the special-move RGB overlay. All four are read
-    # back to back in scExplainLoadExplainFiles, in this order.
+    # tap-spark flash and the special-move RGB overlay. Those four are read
+    # back to back in scExplainLoadExplainFiles, in this order, and the
+    # scene's stage -- the game's own How to Play map, grStageAcquire'd
+    # before any of them -- sits in front of them.
     ("explain", [
+        # The scene's stage, read in scExplainFuncStart before the four
+        # below. It sits here rather than with the other .stg files
+        # because this is the only scene that reads it -- the same
+        # "a scene's files sit together" rule the groups above follow.
+        "explain.stg",
         "scexplaingraphics.spr",
         "scstick.mdl",
         "scspark.mdl",

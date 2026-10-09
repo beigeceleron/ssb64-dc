@@ -48,7 +48,12 @@
  * group index is an index into sndsets.bin and moving one moves every
  * group after it. A kind with no pack has an EMPTY group, which costs
  * nothing to stage and is what a gkind the port cannot play already
- * got. src/dc/stage.h's GR_STAGES_MAX is taken to the same end for the
+ * got: of the seven, only Beta Dream Land and the Test Stage are still
+ * empty. The other five have packs, How to Play's among them --
+ * nSCKindExplain composes its own group, see that arm in
+ * src/dc/sndres.c -- and each is named in
+ * tools/export/ssb_sndsets.py's STAGE_KINDS as its pack lands.
+ * src/dc/stage.h's GR_STAGES_MAX is taken to the same end for the
  * same reason. */
 #define SNDRES_GROUP_STAGE       15
 #define SNDRES_STAGES            (nGRKindCommonEnd + 1)

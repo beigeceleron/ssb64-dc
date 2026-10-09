@@ -1451,7 +1451,7 @@ $(foreach f,$(BOSS_FIGHTERS),$(eval $(call POLY_FIGHTER_RULES,$(f))))
 STAGES = romdisk/castle.stg romdisk/jungle.stg romdisk/zebes.stg \
          romdisk/hyrule.stg romdisk/sector.stg romdisk/yoster.stg \
          romdisk/pupupu.stg romdisk/yamabuki.stg romdisk/inishie.stg \
-         romdisk/last.stg \
+         romdisk/last.stg romdisk/explain.stg \
          romdisk/zako.stg romdisk/metal.stg romdisk/yostersmall.stg \
          $(BONUS1_STAGES) \
          $(BONUS2_STAGES) \
@@ -1601,6 +1601,15 @@ romdisk/inishie.stg: $(STAGETOOL_DEPS)
 romdisk/last.stg: $(STAGETOOL_DEPS)
 	cd ../../.. && python3 tools/export/ssb_stageexport.py \
 	    --rom baserom.z64 --stage Last \
+	    --out $(SELF)/$@
+
+# How to Play, the title's idle demonstration's stage. Like last.stg it is
+# not a VS stage and no select reaches it, and like it it is one in every
+# other way: one map file, one wallpaper, no stage logic. src/dc/scexplain.c
+# binds nGRKindExplain to this pack.
+romdisk/explain.stg: $(STAGETOOL_DEPS)
+	cd ../../.. && python3 tools/export/ssb_stageexport.py \
+	    --rom baserom.z64 --stage Explain \
 	    --out $(SELF)/$@
 
 # The other three stages only the 1P ladder plays: the
@@ -4900,6 +4909,7 @@ $(TARGET): $(OBJS) particlebanks.ld wpattrs.ld
 
 clean: rm-elf
 	-rm -f $(OBJS) $(CFLAGS_STAMP) romdisk.img $(FIGHTER_PACKS) $(FIGHTER_ANMS) romdisk/hyrule.stg \
+	    romdisk/explain.stg \
 	    romdisk/mntitle.spr $(TITLE_ASSETS) $(HUD_BANKS) $(MENU_BANKS) $(ITEM_MODELS) $(FIGHTER_BANKS) \
 	    romdisk/bgm.pak \
 	    romdisk/fgm.ucd romdisk/fgm.tbl romdisk/fgm.unk \
