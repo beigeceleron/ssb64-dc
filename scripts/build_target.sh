@@ -8,8 +8,9 @@
 # scripts/target.sh resolves the name to a directory. The Makefile bakes
 # its own assets from the baserom.
 #
-# MTX_BACKEND=SH4ZAM in the environment builds the render core against the
-# SH4's XMTRX/FTRV instead of scalar C (src/dc/mtx.h). EXTRA_CFLAGS in the
+# MTX_BACKEND in the environment picks the render core's matrix backend:
+# SH4ZAM, the default, is the SH-4's XMTRX/FTRV with FSCA and FSRRA;
+# MTX_BACKEND=SCALAR is the plain C (src/dc/mtx.h). EXTRA_CFLAGS in the
 # environment reaches the compiler the same way (the debug knobs in
 # src/dc/db.h); the Makefile rebuilds what either changes. EXTRA_LDFLAGS
 # reaches the link line (the -Wl,--wrap=... db.h's heap probes need).

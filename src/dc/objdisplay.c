@@ -302,7 +302,7 @@ void gcMtxLookAt(float *m, f32 eye_x, f32 eye_y, f32 eye_z,
     look_z = at_z - eye_z;
 
     /* Negate because positive Z is behind us: */
-    len = -1.0F / sqrtf(SQUARE(look_x) + SQUARE(look_y) + SQUARE(look_z));
+    len = -mtx_rsqrt(SQUARE(look_x) + SQUARE(look_y) + SQUARE(look_z));
     look_x *= len;
     look_y *= len;
     look_z *= len;
@@ -312,7 +312,7 @@ void gcMtxLookAt(float *m, f32 eye_x, f32 eye_y, f32 eye_z,
     right_y = up_z * look_x - up_x * look_z;
     right_z = up_x * look_y - up_y * look_x;
 
-    len = 1.0F / sqrtf(SQUARE(right_x) + SQUARE(right_y) + SQUARE(right_z));
+    len = mtx_rsqrt(SQUARE(right_x) + SQUARE(right_y) + SQUARE(right_z));
     right_x *= len;
     right_y *= len;
     right_z *= len;
@@ -322,7 +322,7 @@ void gcMtxLookAt(float *m, f32 eye_x, f32 eye_y, f32 eye_z,
     up_y = look_z * right_x - look_x * right_z;
     up_z = look_x * right_y - look_y * right_x;
 
-    len = 1.0F / sqrtf(SQUARE(up_x) + SQUARE(up_y) + SQUARE(up_z));
+    len = mtx_rsqrt(SQUARE(up_x) + SQUARE(up_y) + SQUARE(up_z));
     up_x *= len;
     up_y *= len;
     up_z *= len;
@@ -363,7 +363,7 @@ void gcMtxModLookAt(float *m, f32 eye_x, f32 eye_y, f32 eye_z,
     look.z = at_z - eye_z;
 
     /* Negate because positive Z is behind us: */
-    len = -1.0F / sqrtf(SQUARE(look.x) + SQUARE(look.y) + SQUARE(look.z));
+    len = -mtx_rsqrt(SQUARE(look.x) + SQUARE(look.y) + SQUARE(look.z));
     look.x *= len;
     look.y *= len;
     look.z *= len;
@@ -372,7 +372,7 @@ void gcMtxModLookAt(float *m, f32 eye_x, f32 eye_y, f32 eye_z,
     right.x = up_y * look.z - up_z * look.y;
     right.y = up_z * look.x - up_x * look.z;
     right.z = up_x * look.y - up_y * look.x;
-    len = 1.0F / sqrtf(SQUARE(right.x) + SQUARE(right.y) + SQUARE(right.z));
+    len = mtx_rsqrt(SQUARE(right.x) + SQUARE(right.y) + SQUARE(right.z));
     right.x *= len;
     right.y *= len;
     right.z *= len;
@@ -381,7 +381,7 @@ void gcMtxModLookAt(float *m, f32 eye_x, f32 eye_y, f32 eye_z,
     up_x = (look.y * right.z) - (look.z * right.y);
     up_y = (look.z * right.x) - (look.x * right.z);
     up_z = (look.x * right.y) - (look.y * right.x);
-    len = 1.0F / sqrtf(SQUARE(up_x) + SQUARE(up_y) + SQUARE(up_z));
+    len = mtx_rsqrt(SQUARE(up_x) + SQUARE(up_y) + SQUARE(up_z));
     up_x *= len;
     up_y *= len;
     up_z *= len;
@@ -469,7 +469,7 @@ void gcMtxBillboard(float *m, const Vec3f *at, const Vec3f *eye,
     f32 distx = at->x - eye->x;
     f32 disty = at->y - eye->y;
     f32 distz = at->z - eye->z;
-    f32 res = 1.0F / sqrtf(SQUARE(distx) + SQUARE(disty) + SQUARE(distz));
+    f32 res = mtx_rsqrt(SQUARE(distx) + SQUARE(disty) + SQUARE(distz));
 
     distx *= res;
     disty *= res;
@@ -576,9 +576,10 @@ void gcMtxRecalcRotRpyRSca(float *m, const float *at, const float *view,
  * ef/efmanager.c's effects (:4601, :4755). */
 void gcMtxRecalcRotZ(float *m, const float *at, const float *view, f32 rot_z)
 {
-    f32 s = sinf(rot_z);
-    f32 c = cosf(rot_z);
+    f32 s, c;
     s32 i;
+
+    mtx_sincos(rot_z, &s, &c);
 
     for (i = 0; i < 3; i++)
     {
@@ -638,11 +639,12 @@ static void gcMtxRecalcRows(float *m, const float *at, const float *view,
 void gcMtxRecalcRotSca(float *m, const float *at, const float *view,
                        f32 rot, const Vec3f *scale, f32 *scale_x)
 {
-    f32 s = sinf(rot);
-    f32 c = cosf(rot);
+    f32 s, c;
     f32 sy = scale->y * *scale_x;
     f32 sx;
     f32 r[3][3];
+
+    mtx_sincos(rot, &s, &c);
 
     *scale_x *= scale->x;
     sx = *scale_x;
@@ -695,11 +697,13 @@ void gcMtxRecalcRotRpy(float *m, const float *at, const float *view,
                        f32 rot_x, f32 rot_y, const Vec3f *scale,
                        f32 *scale_x)
 {
-    f32 sinx = sinf(rot_x), cosx = cosf(rot_x);
-    f32 siny = sinf(rot_y), cosy = cosf(rot_y);
+    f32 sinx, cosx, siny, cosy;
     f32 sx = 1.0F, sy = 1.0F;
     f32 r[3][3];
     s32 k;
+
+    mtx_sincos(rot_x, &sinx, &cosx);
+    mtx_sincos(rot_y, &siny, &cosy);
 
     if (scale_x != NULL)
     {

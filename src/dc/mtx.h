@@ -5,10 +5,15 @@
  * writes, so matrices compose the usual way round (parent * local); the
  * game's matrix row/column layout is the reference.
  *
- * MTX_BACKEND picks the implementation. MTX_BACKEND_SCALAR is the plain C
- * these bodies were lifted from and is the default; MTX_BACKEND_SH4ZAM runs
- * the same algebra on the SH4's FPU back-bank. Both stay in the tree so a
- * regression can be bisected against the scalar path on the target.
+ * MTX_BACKEND picks the implementation, and the game's build makes SH4ZAM
+ * the default (src/game/ssb64/Makefile): the same algebra on the SH4's FPU
+ * back-bank, and measured in a soak the faster of the two by a wide margin.
+ * MTX_BACKEND_SCALAR is the plain C these bodies were lifted from; both
+ * stay in the tree so a regression can be bisected against the scalar path
+ * on the target, and `make MTX_BACKEND=SCALAR` is how a build asks for it.
+ * The #ifndef below still falls back to SCALAR, so anything that does not
+ * set the macro -- the host cross-tests, off-target -- gets the plain C
+ * without having to know any of this.
  *
  * SH4ZAM stores column-major, so on our row-major arrays load_4x4(A) puts
  * A-transpose in XMTRX and load/apply/store reverses the operands. The two
