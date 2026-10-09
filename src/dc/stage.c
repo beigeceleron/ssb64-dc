@@ -1450,6 +1450,14 @@ static const char *dGRStageFiles[GR_STAGES_MAX] =
      * against each other. */
     [nGRKindYamabuki] = "yamabuki.stg",
     [nGRKindInishie] = "inishie.stg",
+    /* How to Play, the title's idle demonstration's stage. No select
+     * reaches it and it has no stage logic of its own either (there is no
+     * gr/grcommon/gr*.c for it), so this line plus the pack is the whole
+     * of it. src/dc/scexplain.c binds this kind -- the same one the
+     * decomp's own scExplainSetBattleState writes into the battle state
+     * (sc/sccommon/scexplain.c:159) -- rather than the Hyrule substitute
+     * it played on while the pack did not exist. */
+    [nGRKindExplain] = "explain.stg",
     /* Final Destination, the Master Hand rung's stage and
      * the first entry here past nGRKindBattleEnd -- the stage select
      * cannot reach it, only the 1P ladder can. It has no stage logic of

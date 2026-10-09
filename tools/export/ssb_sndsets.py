@@ -101,11 +101,13 @@ STAGES = ["Castle", "Sector", "Jungle", "Zebes", "Hyrule", "Yoster",
 # The stage groups are indexed by nGRKind, not by position in STAGES
 # above -- src/dc/sndres.c writes SNDRES_GROUP_STAGE + gkind -- so the
 # group list runs to nGRKindCommonEnd and holds a slot for every kind,
-# named or not. The three unnamed ones (Beta Dream Land, the Test Stage
-# and How to Play) have no pack and get an empty group. The four 1P-only
-# maps -- Small Yoshi's Island, Meta Crystal, Duel Zone and Race to the
-# Finish -- were unnamed too until their packs were exported, and
-# a rung on one of them played with its music not resident.
+# named or not. The two unnamed ones (Beta Dream Land and the Test Stage)
+# have no pack and get an empty group. The four 1P-only maps -- Small
+# Yoshi's Island, Meta Crystal, Duel Zone and Race to the Finish -- were
+# unnamed too until their packs were exported, and a rung on one of them
+# played with its music not resident. How to Play was the fifth: its pack
+# (explain.stg) is what src/dc/sndres.c's nSCKindExplain arm composes, and
+# the scene played Hyrule's track until it landed.
 # src/dc/sndres.h's SNDRES_STAGES note says why the holes are held open
 # rather than renumbered away. STAGES itself stays the VS nine, because
 # that is what the battle and stage-select worst cases are taken over.
@@ -115,7 +117,7 @@ STAGES = ["Castle", "Sector", "Jungle", "Zebes", "Hyrule", "Yoster",
 # of the SNDRES_STAGES the C computes, and the only symptom was
 # sndres_init's "boot: no sound sets; the game is silent" -- a whole
 # silent game for an off-by-one in a comment's worth of enum counting.
-STAGE_KINDS = (STAGES + [None] * 3 +
+STAGE_KINDS = (STAGES + [None, None, "Explain"] +
                ["YosterSmall", "Metal", "Zako", "Bonus3", "Last"])
 # "credits" (src/dc/sndres.h's own header note): the ending
 # diorama and the staff roll, kept out of "menu" on purpose -- their two
@@ -740,6 +742,14 @@ def scene_worst(c):
             if best is None or fb + bb > best[2] + best[3]:
                 best = ("battle", g, fb, bb)
     rows.append(best)
+    # How to Play (src/dc/sndres.c's nSCKindExplain arm): a battle, so
+    # "core" and a stage -- but its stage is not one of the nine the
+    # "battle" row above takes its best-of over, and its two fighters are
+    # Mario and Luigi, hardcoded by scExplainSetBattleState rather than
+    # picked. Its own row, or the group it composes would be the one
+    # composition nothing here measures.
+    g = ["core", "stage:Explain", "fighter:Mario", "fighter:Luigi"]
+    rows.append(("how to play", g) + set_bytes(c, g))
     best = None
     for four in itertools.combinations(fighters, 4):
         g = ["menu", "results"] + list(four)

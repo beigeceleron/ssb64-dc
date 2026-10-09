@@ -17,20 +17,22 @@
  * Three DIVERGES, beyond the usual video/matrix-list/DL-buffer ones
  * every scene here already carries:
  *
- *  - nGRKindExplain has a real ground/map file in the decomp
- *    (relocData 267/115, dGRExplainMap_header) but no exported pack --
- *    tools/export/ssb_stageexport.py has no path for it and none of the port's
- *    nine VS stages is it. This scene falls back to Hyrule for its
- *    ground, collision and wallpaper, the same "no pack -> Hyrule"
- *    substitute src/dc/scvsbattle.c's own scVSBattleStartScene and
- *    src/dc/scautodemo.c's own scAutoDemoFuncStart already use --
- *    unconditionally here, since Explain's gkind never has a pack to
- *    try first. Without SOME bound stage, stage_bind_collision leaves
- *    gMPCollisionGeometry untouched (stale or NULL from whatever the
- *    previous scene bound, since taskman's scene-heap reset would have
- *    freed it) and mpCollisionGetPlayerMapObjPosition -- called for
- *    both fighters' spawn positions -- dereferences it unconditionally.
- *    Hyrule gives real, safe ground data as a side effect.
+ *  - The ground is not loaded the way the decomp's is. The game's
+ *    gr/grmain.c loads nGRKindExplain's map file for
+ *    mpCollisionInitGroundData -- relocData 267 GRExplainMap over 115
+ *    StageExplainFile2, dGRExplainMap_header -- while this port acquires
+ *    the same kind's exported pack (explain.stg,
+ *    tools/export/ssb_stageexport.py's "Explain" entry, which bakes those
+ *    two files) through grStageAcquire, the substitution every battle
+ *    scene here makes. DIVERGES, defensively: a pack that will not load
+ *    still falls back to Hyrule, said on the log, the same arm
+ *    src/dc/scvsbattle.c's own scVSBattleStartScene and
+ *    src/dc/scautodemo.c's own scAutoDemoFuncStart carry. Without SOME
+ *    bound stage, stage_bind_collision leaves gMPCollisionGeometry
+ *    untouched (stale or NULL from whatever the previous scene bound,
+ *    since taskman's scene-heap reset would have freed it) and
+ *    mpCollisionGetPlayerMapObjPosition -- called for both fighters'
+ *    spawn positions -- dereferences it unconditionally.
  *
  *  - relocData file 252 (SCExplainMain: both players' KeyEvent scripts
  *    and the 22-entry ExplainPhase table) is already decoded, readable

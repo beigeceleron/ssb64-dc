@@ -1502,7 +1502,7 @@ def first_per_root(recs):
 
 
 STAGES = ("Castle Jungle Zebes Hyrule Sector Yoster Pupupu Yamabuki Inishie "
-          "Last Zako Metal YosterSmall Bonus3").split() + \
+          "Last Explain Zako Metal YosterSmall Bonus3").split() + \
     ["Bonus1" + n for n in "Mario Fox Donkey Samus Luigi Link Yoshi Captain "
                            "Kirby Pikachu Purin Ness".split()] + \
     ["Bonus2" + n for n in "Mario Fox Donkey Samus Luigi Link Yoshi Captain "

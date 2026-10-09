@@ -1221,6 +1221,45 @@ STAGES = {
                            "dl_links": True},
         },
     },
+    # How to Play, the title's own idle demonstration's stage
+    # (nGRKindExplain, gr/grdef.h:27 -- the eleventh kind, past the nine
+    # VS stages). It is not a VS stage: no select reaches it, the
+    # scene that plays it is sc/sccommon/scexplain.c and it sets gkind
+    # to this kind itself (scexplain.c:159), and mp/mpcollision.c:39 maps
+    # the kind to relocData 267 GRExplainMap, whose layers are file 115
+    # StageExplainFile2.
+    #
+    # No stage logic file of its own -- there is no gr/grcommon/gr*.c for
+    # it, the same reason "Last" above sits at 0x0 -- so this entry is the
+    # whole of the stage. The map header names four layers and nothing
+    # else: no MObjSub on any layer (the material chain a layer's parts
+    # would carry -- the eight images the layers draw are baked into the
+    # pack the way any stage's are), no AnimJoint or MatAnimJoint on any
+    # layer, layer_mask 0, no map_nodes and no item_weights -- so
+    # read_ground finds the wallpaper and leaves the rest NULL, and the
+    # pack is the merged layers plus a WLP1 block.
+    #
+    # The wallpaper is DREAM LAND's, not this file's: the map header's
+    # Sprite* points into Dream Land's own sprite block
+    # (`dStageDreamLand_sprite_0x26C88`), the game reusing the one 300x220
+    # background rather than a transcription error here. read_wallpaper
+    # resolves it wherever it points, the same as for every stage.
+    #
+    # Every scalar was read off the ROM and checked against
+    # relocData/267_GRExplainMap.c, which is the contract read_ground
+    # enforces. cam/map are the decomp's camera_bound_* and map_bound_*
+    # (t/b/r/l), alt_warning its own, and bgm nSYAudioBGMExplain
+    # (gm/gmsound.h) -- the scene's battle plays it through
+    # mpCollisionSetPlayBGM like any stage's (src/dc/sndres.h's
+    # SNDRES_GROUP_ATTRACT note said so before this pack existed).
+    "Explain": {
+        "map_file": 267,
+        "cam": (2300, -1400, 2600, -1500),
+        "map": (6000, -3000, 6300, -10000),
+        "alt_warning": -1900,
+        "bgm": 34,
+        "fog": (0x6E, 0xD2, 0xFF),
+    },
 }
 
 LINE_KINDS = ("floor", "ceil", "rwall", "lwall")
