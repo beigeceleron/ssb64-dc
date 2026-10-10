@@ -610,6 +610,81 @@ int itemPackLoad(const char *name)
         return -1;
     }
 
+    /* DIVERGES, and the one thing the pack's own bytes cannot say: region
+     * 1 is ITCommonObject VERBATIM, so it is BIG-endian, and this port
+     * reads it on a little-endian CPU. Every other pack in the port is
+     * written host-order by its exporter (tools/export/ssb_effectexport.py's
+     * animjoint_block unpacks `>I` and build_pack stores `<I`, and
+     * tools/check/pack_anim_check.py holds every one of them to the script
+     * it was cut from) -- this pack is the only one that ships the ROM's
+     * own bytes, because a fixup target has to be an offset the loader can
+     * name (`carry a FIXUP TABLE ...`, below).
+     *
+     * What is read out of the region at run time is a SCRIPT and nothing
+     * else: `attr->anim_joints`, every `itGetPData(ip, ..., ...AnimJoint)`
+     * and `...MatAnimJoint`, and `itGetMonsterAnimNode` all land in region
+     * 1, and all of them go to gcAddDObjAnimJoint / gcAddMObjMatAnimJoint,
+     * which hand their words to sys/objanim.c's parser as HOST words. The
+     * region's DObjDesc trees, display lists, MObjSub tables and sprite
+     * arrays are never read as data here -- the port builds its trees and
+     * materials from the baked model pack
+     * (tools/export/ssb_itemmodelexport.py) and compares a display list by
+     * ADDRESS alone (src/dc/itemmodel.c itemModelSetDisplayList) -- so
+     * swapping the whole region is swapping exactly the words that matter
+     * and no others.
+     *
+     * What it cost: all twenty AnimJoint/MatAnimJoint/AnimBankStart blocks
+     * in region 1 decode as AJ_END (opcode 0) on their FIRST word this way
+     * round, so gcParseDObjAnimJoint parsed nothing and every script ended
+     * the frame it was attached. Beedrill is where it was visible, and
+     * measured on a console (-DDB_SPEAR_PROBE, dcload-serial): the
+     * bank script attached by itSpearMakeItem read
+     * `wait -3.403e+38` (AOBJ_ANIM_NULL) one frame later with its frame
+     * back at 0. nITSpearStatusAppear is the one state in the thirteen
+     * that ends on an animation FRAME rather than a counter --
+     * itSpearAppearProcUpdate waits for `item_gobj->anim_frame ==
+     * ITSPEAR_SWARM_CALL_WAIT` (51) -- so with the script dead on arrival
+     * that frame never comes and the item hovers where it stopped for the
+     * life of the match. Bob-omb's walk, the Poké Ball's lid, the shells'
+     * and Chansey's own AnimJoints, and every monster's appear and attack
+     * animation were dead the same way, all of them less obviously.
+     *
+     * The swap runs BEFORE the fixups: those write host addresses into the
+     * region's pointer sites, and a swap after them would take the
+     * addresses apart again.
+     *
+     * AND IT RUNS ONLY WHERE THOSE FIXUPS DO, which is the same
+     * four-byte-pointer condition for the same reason. A swapped region is
+     * one whose script words the interpreter reads -- and a host whose
+     * `union AObjEvent32` is eight bytes wide, so that `AObjAnimAdvance`'s
+     * `p++` steps two words, cannot read one whatever its byte order: it
+     * takes a float value for a command word, finds an opcode with no
+     * case, and sits in the parser's `default:`. That is not hypothetical
+     * -- it is what the first version of this swap did to `hosttest_ft`,
+     * which spun the moment Chansey's `itMLuckyMakeItem` attached its
+     * AnimJoint and the item's first frame parsed it. The host had been
+     * reading the same bytes unswapped, where the garbage happened to hit
+     * AJ_END and stop; the host plays these scripts by luck or not at all,
+     * and `#ifdef FT_HOSTTEST` guards on the attaches are what it is
+     * meant to rely on instead (src/dc/itempack.h, src/dc/itmlucky.c).
+     * Leaving the host's bytes alone keeps every host test exactly where
+     * it was, which is the only thing a 64-bit build can honestly be held
+     * to. */
+    if (sizeof(void *) == 4)
+    {
+        for (i = 0; i + 4 <= sItemModelSize; i += 4)
+        {
+            u8 *w = (u8 *)p + sItemOffModels + i;
+            u8 t = w[0];
+
+            w[0] = w[3];
+            w[3] = t;
+            t = w[1];
+            w[1] = w[2];
+            w[2] = t;
+        }
+    }
+
     /* The fixups: the (site, target) pairs the exporter leaves for whoever
      * reads an `ITAttributes` off region 0 without going through region 2.
      * Each is bounds-checked here on both architectures, and applied only

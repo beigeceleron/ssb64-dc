@@ -60,6 +60,75 @@ static void test_item_pack(void)
     CHECK(itemPackBlock(ITEM_PACK_REGION_MODELS, "AnimJoint Shell",
                         NULL) != NULL);
 
+    /* ---- and the region's own byte order ----------------------------
+     *
+     * Region 1 is ITCommonObject VERBATIM, so it is the ROM's BIG-endian
+     * bytes, and itemPackLoad byte-swaps it as it loads (src/dc/itempack.c):
+     * the words the port reads out of that region are AObjEvent32 scripts --
+     * `attr->anim_joints`, every `itGetPData(ip, ..., ...AnimJoint)`, and
+     * itGetMonsterAnimNode -- and sys/objanim.c's parser reads them as HOST
+     * words. A Beedrill whose appear script reads as AJ_END on its first
+     * word sits still for the whole match, which is the bug this holds.
+     *
+     * That swap is load-time C, so this is the only place it can be held to:
+     * the host cross-test runs the REAL loader and the words below are the
+     * ROM's own (relocData/56_ITCommonObject.c's tables at 0x0DFFC, 0x13624
+     * and 0x0E12C).
+     *
+     * The one that mattered: `AnimJoint Spear`'s first word is 0x0C180000,
+     * a SetValRate command (opcode 6). Byte-for-byte it is 0x0000180C, whose
+     * opcode field is 0 -- AJ_END -- so without the swap gcParseDObjAnimJoint
+     * ended Beedrill's appear script on the frame it was attached,
+     * item_gobj->anim_frame never left 0, and nITSpearStatusAppear -- the
+     * one item state in the game that ends on an animation FRAME rather
+     * than a counter, waiting for ITSPEAR_SWARM_CALL_WAIT (51) -- waited
+     * for the rest of the match. Beedrill sat where it stopped. The bank
+     * script is here because it is the one itSpearMakeItem attaches, and
+     * the MatAnimJoint because the same load feeds gcAddMObjMatAnimJoint.
+     *
+     * WHICH WORD THAT IS DEPENDS ON THE POINTER SIZE, and that is the whole
+     * of what this holds: itemPackLoad swaps region 1 only on a build whose
+     * four-byte pointers let the fixup pass write addresses into its
+     * pointer sites (`sizeof(void *) == 4` in src/dc/itempack.c, which says
+     * why a 64-bit host must be left alone -- `union AObjEvent32` is eight
+     * bytes there, so its parser cannot read a script in EITHER byte
+     * order). A 64-bit build therefore sees the ROM's bytes exactly as the
+     * file has them, which is the byte-reverse of the words above; a 32-bit
+     * build sees the words themselves. Either way a pack that shipped
+     * pre-swapped bytes, or a loader that stopped swapping, moves the word
+     * this reads and fails here. */
+    {
+        static const struct
+        {
+            const char *block;
+            u32 rom_word;
+        }
+        kWords[] =
+        {
+            { "AnimJoint Spear",       0x0C180000 },
+            { "MatAnimJoint Spear",    0x14008000 },
+            { "AnimBankStart Monster", 0x0CC00000 }
+        };
+        u32 i;
+
+        for (i = 0; i < ARRAY_COUNT(kWords); i++)
+        {
+            const u32 *w = itemPackBlock(ITEM_PACK_REGION_MODELS,
+                                         kWords[i].block, NULL);
+            u32 word = kWords[i].rom_word;
+
+            if (sizeof(void *) > 4)
+            {
+                word = ((word & 0x000000FFu) << 24) |
+                       ((word & 0x0000FF00u) <<  8) |
+                       ((word & 0x00FF0000u) >>  8) |
+                       ((word & 0xFF000000u) >> 24);
+            }
+            CHECK(w != NULL);
+            CHECK(*w == word);
+        }
+    }
+
     /* a shell's material chain is NOT NULL -- so the reader is not
      * reading a field of zeroes and calling it agreement */
     CHECK(itemPackGetAttr("GShell", &attr) == 0);

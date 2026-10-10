@@ -1828,6 +1828,111 @@ static void db_item_alt_probe(int frame)
 }
 #endif /* DB_ITEM_ALT_PROBE */
 
+/* ---- -DDB_SPEAR_PROBE: Beedrill's appear state, frame by frame ---------
+ *
+ * For the "the Beedrill sits still and does nothing" report. Beedrill is
+ * the only one of the thirteen Poké Ball monsters whose state machine ends
+ * a state on an ANIMATION FRAME rather than a counter: itSpearAppearProcUpdate
+ * waits for `item_gobj->anim_frame == ITSPEAR_SWARM_CALL_WAIT` (51) and
+ * hands over to Fly on that frame. If that frame never arrives the item
+ * hovers where it stopped, with its velocity zeroed by
+ * itSpearAppearInitVars -- which is what "sits still" looks like.
+ *
+ * `item_gobj->anim_frame` is the GObj's mirror of whichever DObj in the
+ * tree carries the script (gcParseDObjAnimJoint's
+ * `dobj->parent_gobj->anim_frame = dobj->anim_frame`), so this prints the
+ * whole chain: the state, the GObj's anim_frame, and the script DObj's own
+ * anim_frame / anim_wait / script pointer. A DObj with a NULL
+ * `anim_joint.event32` and anim_wait at AOBJ_ANIM_NULL is one the parse
+ * never touches, and a GObj anim_frame stuck while the DObj's climbs means
+ * the two are not the same DObj.
+ *
+ * Needs -DDB_BOOT_SCENE=nSCKindVSBattle. Spawns beside P1 at frame 200 and
+ * logs for 400 frames after.
+ *
+ * What it showed, on a console (dcload-serial): the frame the bank script
+ * was attached it read AOBJ_ANIM_CHANGED, and the very next frame it read
+ * AOBJ_ANIM_NULL with the frame back at 0 -- a script that ends on its own
+ * first word. It was the item pack's byte order: region 1 is
+ * ITCommonObject verbatim, so it is BIG-endian, and the SH-4 read those
+ * script words little-endian -- `0x0CC00000` byte-for-byte is `0x0000C00C`,
+ * whose opcode field is 0 (AJ_END). src/dc/itempack.c's itemPackLoad now
+ * swaps the region; the host cross-test holds the first word of the three
+ * scripts above to the ROM's own (src/game/ssb64/hosttest/itemcore.c). */
+#ifdef DB_SPEAR_PROBE
+static void db_spear_probe(int frame)
+{
+    extern sb32 itSpearCommonProcUpdate(GObj *item_gobj);
+    extern sb32 itSpearAppearProcUpdate(GObj *item_gobj);
+    extern sb32 itSpearFlyProcUpdate(GObj *item_gobj);
+    static GObj *spear;
+    static s32 made_frame;
+    GObj *fighter_gobj = db_fighter_gobj(0);
+    Vec3f pos, vel;
+
+    /* Not `frame == 200`: `frame` is dSYTaskmanUpdateCount, which counts
+     * from boot, and the boot to a battle is not a fixed number of tics.
+     * The first frame at or past 200 with a fighter on the field is the
+     * battle's own. */
+    if ((spear == NULL) && (frame >= 200) && (fighter_gobj != NULL))
+    {
+        pos = DObjGetStruct(fighter_gobj)->translate.vec.f;
+        pos.x += 250.0F;
+        pos.y += 150.0F;
+        vel.x = vel.y = vel.z = 0.0F;
+
+        spear = itManagerMakeItemSetupCommon
+        (
+            NULL, nITKindSpear, &pos, &vel,
+            (ITEM_FLAG_COLLPROJECT | ITEM_FLAG_PARENT_DEFAULT)
+        );
+        made_frame = frame;
+
+        dbglog(DBG_INFO, "db: spear -- frame %d made %p at %.0f,%.0f\n",
+               frame, (void *)spear, (double)pos.x, (double)pos.y);
+    }
+    if ((spear == NULL) || (frame < made_frame) || (frame > made_frame + 400))
+    {
+        return;
+    }
+    {
+        ITStruct *ip = itGetStruct(spear);
+        DObj *dobj = DObjGetStruct(spear);
+        DObj *child = (dobj != NULL) ? dobj->child : NULL;
+        const char *state =
+            (ip->proc_update == itSpearCommonProcUpdate) ? "common" :
+            (ip->proc_update == itSpearAppearProcUpdate) ? "appear" :
+            (ip->proc_update == itSpearFlyProcUpdate) ? "fly" : "other";
+
+        {
+            GObj *g;
+            int nweapons = 0;
+
+            for (g = gGCCommonLinks[nGCCommonLinkIDWeapon]; g != NULL;
+                 g = g->link_next)
+            {
+                nweapons++;
+            }
+            dbglog(DBG_INFO,
+                   "db: spear -- frame %d kind %d %s anim_frame %.1f "
+                   "dobj child %p frame %.1f wait %.4g script %p "
+                   "pos %.0f,%.0f vel %.1f,%.1f multi %d att %d wp %d\n",
+                   frame, (int)ip->kind, state, (double)spear->anim_frame,
+                   (void *)child,
+                   (child != NULL) ? (double)child->anim_frame : -1.0,
+                   (child != NULL) ? (double)child->anim_wait : 0.0,
+                   (child != NULL) ? (void *)child->anim_joint.event32 : NULL,
+                   (dobj != NULL) ? (double)dobj->translate.vec.f.x : 0.0,
+                   (dobj != NULL) ? (double)dobj->translate.vec.f.y : 0.0,
+                   (double)ip->physics.vel_air.x,
+                   (double)ip->physics.vel_air.y,
+                   (int)ip->multi, (int)ip->attack_coll.attack_state,
+                   nweapons);
+        }
+    }
+}
+#endif /* DB_SPEAR_PROBE */
+
 /* ---- -DDB_COMPLETE_BANNER: the cleared-bonus-stage banner ---------------
  *
  * COMPLETE! is spelled out of file 7's PLAIN alphabet and
@@ -9089,6 +9194,9 @@ static void db_battle_run(GObj *gobj)
 #endif
 #ifdef DB_ITEM_ALT_PROBE
     db_item_alt_probe(frame);
+#endif
+#ifdef DB_SPEAR_PROBE
+    db_spear_probe(frame);
 #endif
 #ifdef DB_TARUBOMB_PROBE
     db_tarubomb_probe(frame);
