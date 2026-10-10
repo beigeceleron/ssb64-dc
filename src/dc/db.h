@@ -348,6 +348,16 @@
  *                      comes up; the glass's draw logs its triangles and
  *                      depth scale (src/dc/fighter.c). P1 is Fox unless
  *                      DB_BOOT_P1_KIND says otherwise
+ *   DB_SPEAR_PROBE     spawns a Beedrill beside P1 in a DB_BOOT_SCENE
+ *                      battle and logs its state every frame for 400:
+ *                      the GObj's anim_frame, the script DObj's own
+ *                      frame, anim_wait and script pointer, the item's
+ *                      position and velocity, and the live weapon count.
+ *                      nITSpearStatusAppear is the one item state in the
+ *                      game that ends on an animation FRAME rather than a
+ *                      counter, so it is where a script that never runs
+ *                      shows up as "the Pokémon sits still"; the weapon
+ *                      count is the swarm arriving (read in src/dc/db.c)
  *   DB_PC_ROOT         asset_root() also tries /pc -- KOS's dcload
  *                      host-filesystem passthrough over a serial coder's
  *                      cable or a BBA, dc-tool on the host end -- before
